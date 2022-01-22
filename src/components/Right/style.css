@@ -1,0 +1,58 @@
+#Right-main-body {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  height: 100%;
+  width: 50%;
+  background-color: black;
+  text-align: left;
+}
+.Right-main-content {
+  color: azure;
+  padding: 5% 5% 5% 5%;
+}
+.Right-main-content h1 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+.Right-main-content h4 {
+  margin-top: 60px;
+}
+.Right-main-logo {
+  background-color: azure;
+  height: 10em;
+  width: 10em;
+  /*로고 수정 요망 색상 및 디자인*/
+}
+.Right-loginid-input {
+  width: 12.5em;
+  height: 2em;
+  outline: none;
+  background: linear-gradient();
+  border-radius: --px;
+  box-shadow: -px -px -px color;
+  letter-spacing: -px;
+}
+.Right-loginpw-input {
+  width: 12.5em;
+  height: 2em;
+  outline: none;
+  background: linear-gradient();
+  border-radius: --px;
+  box-shadow: -px -px -px color;
+  letter-spacing: -px;
+}
+.Right-login-button {
+  width: 13.3em;
+  height: 2em;
+  color: white;
+  background: #28a9e0;
+}
+.Right-login-label {
+  font-size: 15px;
+  color: gray;
+}
+.Right-login-auto input {
+  width: 3px;
+  height: 3px;
+}

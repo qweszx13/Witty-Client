@@ -1,5 +1,13 @@
+import Left from "../components/Left";
+import Right from "../components/Right";
+
 function LoginPage() {
-  return <div>로그인페이지</div>;
+  return (
+    <>
+      <Left />
+      <Right />
+    </>
+  );
 }
 
 export default LoginPage;
