@@ -1,0 +1,13 @@
+.home_box {
+  position: absolute;
+  width: 49.9%;
+  height: 70%;
+  background-color: black;
+  left: 25%;
+  top: 30%;
+  border-left: 2px solid rgba(172, 172, 172, 0.5);
+  border-top: 2px solid rgba(172, 172, 172, 0.5);
+  border-right: 2px solid rgba(172, 172, 172, 0.5);
+  color: white;
+  text-align: center;
+}
