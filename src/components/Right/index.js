@@ -27,11 +27,11 @@ export function Right() {
             <button className="Right-login-button">로그인</button>
           </Link>
           <p></p>
-          <lable className="Right-login-label">
+          <label className="Right-login-label">
             로그인 상태 유지<input type="checkBox" name="auto-login"></input>
-          </lable>
+          </label>
           <p></p>
-          <lable style={{ marginRight: "20px" }}>아직 회원이 아니신가요?</lable>
+          <label style={{ marginRight: "20px" }}>아직 회원이 아니신가요?</label>
           <button className="Right-signup-button">회원가입</button>
         </div>
       </div>
