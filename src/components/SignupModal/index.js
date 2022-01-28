@@ -1,6 +1,6 @@
 import Modal from "antd/lib/modal/Modal";
-import { Form, Input, Checkbox, AutoComplete } from "antd";
-import { useRef } from "react";
+import { Form, Input, Checkbox, AutoComplete, notification } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
 
 const formItemLayout = {
   labelCol: {
@@ -40,20 +40,29 @@ const majarOptions = [
 ];
 
 function SignupModal({ isModalVisible, setIsModalVisible }) {
+  const [form] = Form.useForm();
   const handleOk = () => {
     // 실행
     form.submit();
-    // setIsModalVisible(false);
+    setIsModalVisible(false);
+    SignupCompleteNotification();
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  const [form] = Form.useForm();
-
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+  };
+
+  const SignupCompleteNotification = () => {
+    notification.open({
+      message: "회원가입 성공 !",
+      description:
+        "회원가입이 성공적으로 이루어졌습니다! Witty의 회원이 되신 것을 환영합니다!",
+      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
   };
 
   return (
