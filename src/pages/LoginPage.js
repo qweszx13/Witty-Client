@@ -1,10 +1,11 @@
 import logo from "../assets/images/logo.png";
 import background from "../assets/images/login-background.jpg";
 import { Button } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SignupModal from "../components/SignupModal";
 import "../components/Left/style.css";
 import "../components/Right/style.css";
+import { login } from "../apis/users";
 
 function LoginPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);

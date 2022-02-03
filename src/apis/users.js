@@ -20,7 +20,7 @@ import http from "./instance";
  * @param {UserInfo} userInfo 유저 정보
  * @returns {Promise}
  */
-export const signin = (userInfo) => http.post("/users", userInfo);
+export const signup = (userInfo) => http.post("/users", userInfo);
 
 /**
  * 로그인
@@ -41,3 +41,21 @@ export const logout = () => http.post("/users/logout");
  * @returns {Promise}
  */
 export const idCheck = (userId) => http.post("/users/id_check", { userId });
+
+/**
+ * 이메일 전송
+ *
+ */
+export const sendEmail = (email) => http.post("/users/sendEmail", { email });
+
+/**
+ * 인증번호 확인
+ * @param {string} email 이메일
+ * @param {string} key 키
+ * @returns {Promise}
+ */
+export const verification = (email, key) =>
+  http.post("/users/verification", {
+    email,
+    key,
+  });

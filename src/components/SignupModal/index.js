@@ -1,6 +1,17 @@
+import { useCallback } from "react";
 import Modal from "antd/lib/modal/Modal";
-import { Form, Input, Checkbox, AutoComplete, notification } from "antd";
+import {
+  Form,
+  Input,
+  Checkbox,
+  AutoComplete,
+  notification,
+  Row,
+  Col,
+  Button,
+} from "antd";
 import { SmileOutlined } from "@ant-design/icons";
+import { signup } from "../../apis/users";
 
 const formItemLayout = {
   labelCol: {
@@ -42,28 +53,44 @@ const majarOptions = [
 function SignupModal({ isModalVisible, setIsModalVisible }) {
   const [form] = Form.useForm();
   const handleOk = () => {
-    // 실행
     form.submit();
-    setIsModalVisible(false);
-    SignupCompleteNotification();
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const onFinish = async ({
+    user_id,
+    user_email,
+    user_department,
+    password,
+  }) => {
+    try {
+      const result = await signup({
+        user_id,
+        user_email,
+        user_department,
+        password,
+      });
+      setIsModalVisible(false);
+      SignupCompleteNotification(result.user_id);
+    } catch ({ message }) {
+      alert(message);
+    }
   };
 
-  const SignupCompleteNotification = () => {
+  const SignupCompleteNotification = (user_id) => {
     notification.open({
       message: "회원가입 성공 !",
-      description:
-        "회원가입이 성공적으로 이루어졌습니다! Witty의 회원이 되신 것을 환영합니다!",
+      description: `회원가입이 성공적으로 이루어졌습니다! ${user_id}님의 Witty 회원이 되신 것을 환영합니다!`,
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
   };
+
+  const emailCheck = async (email) => {
+    await 
+  }
 
   return (
     <Modal
@@ -82,20 +109,43 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         scrollToFirstError
       >
         <Form.Item
-          name="email"
-          label="이메일"
+          name="user_id"
+          label="아이디"
+          tooltip="아이디는 다른 사람에게 보이는 이름 정보입니다."
           rules={[
             {
-              type: "email",
-              message: "유효하지 않은 이메일 입니다!",
-            },
-            {
               required: true,
-              message: "이메일을 입력해주세요!",
+              message: "아이디를 입력해주세요!",
+              whitespace: true,
             },
           ]}
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item label="이메일">
+          <Row gutter={8}>
+            <Col span={16}>
+              <Form.Item
+                name="user_email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "유효하지 않은 이메일 입니다!",
+                  },
+                  {
+                    required: true,
+                    message: "이메일을 입력해주세요!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Button>이메일 인증</Button>
+            </Col>
+          </Row>
         </Form.Item>
 
         <Form.Item
@@ -139,22 +189,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         </Form.Item>
 
         <Form.Item
-          name="name"
-          label="이름"
-          tooltip="이름은 다른 사람에게 보이는 정보입니다."
-          rules={[
-            {
-              required: true,
-              message: "이름을 입력해주세요!",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="major"
+          name="user_department"
           label="학과"
           rules={[{ required: true, message: "학과를 선택해 주세요!" }]}
         >
