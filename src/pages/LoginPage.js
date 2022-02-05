@@ -1,11 +1,13 @@
 import logo from "../assets/images/logo.png";
 import background from "../assets/images/login-background.jpg";
 import { Button } from "antd";
-import { useState, useEffect } from "react";
+import { useState ,useEffect } from "react";
 import SignupModal from "../components/SignupModal";
 import "../components/Left/style.css";
 import "../components/Right/style.css";
+import { Link } from "react-router-dom";
 import { login } from "../apis/users";
+import { openNotification }  from "../components/notification/index.js";
 
 function LoginPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -13,6 +15,25 @@ function LoginPage() {
   const showModal = () => {
     setIsModalVisible(true);
   };
+
+  let id,pw = "";
+  let newResult = "";
+  let [userId,setUserId] = useState("");
+  let [userPw,setUserPw] = useState("");
+
+  useEffect(()=>{
+    (async ()=>{
+      const data = await login({
+        user_id:userId,
+        password:userPw
+      })
+      newResult = data.data.result
+      newResult === "성공"
+      ?window.location.replace("/")
+      :<openNotification></openNotification>
+    })()
+  })
+
 
   return (
     <>
@@ -30,15 +51,24 @@ function LoginPage() {
             className="Right-loginid-input"
             type="text"
             placeholder="ID"
+            onChange={(e)=>{
+              id=e.target.value
+            }}
           ></input>
           <p></p>
           <input
             className="Right-loginpw-input"
             type="text"
             placeholder="pw"
+            onChange={(e)=>{
+              pw=e.target.value
+            }}
           ></input>
           <p></p>
-          <Button type="primary" href="/">
+          <Button type="primary"  onClick={()=>{
+            setUserId(id)
+            setUserPw(pw)
+          }}>
             로그인
           </Button>
           <p></p>
