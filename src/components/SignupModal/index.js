@@ -88,9 +88,9 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     });
   };
 
-  const emailCheck = async (email) => {
-    await 
-  }
+  // const emailCheck = async (email) => {
+  //   await 
+  // }
 
   return (
     <Modal

@@ -7,7 +7,6 @@ import "../components/Left/style.css";
 import "../components/Right/style.css";
 import { Link } from "react-router-dom";
 import { login } from "../apis/users";
-import { openNotification }  from "../components/notification/index.js";
 
 function LoginPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -28,9 +27,10 @@ function LoginPage() {
         password:userPw
       })
       newResult = data.data.result
-      newResult === "성공"
-      ?window.location.replace("/")
-      :<openNotification></openNotification>
+      
+      if(newResult==="성공"){
+        window.location.replace("/")
+      }
     })()
   })
 
