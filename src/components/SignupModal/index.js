@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import Modal from "antd/lib/modal/Modal";
 import {
   Form,
@@ -11,7 +10,8 @@ import {
   Button,
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import { signup } from "../../apis/users";
+import { signup, sendEmail } from "../../apis/users";
+import { createRef } from "react";
 
 const formItemLayout = {
   labelCol: {
@@ -88,9 +88,13 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     });
   };
 
-  // const emailCheck = async (email) => {
-  //   await
-  // }
+  const email = createRef();
+
+  const emailCheck = async () => {
+    console.log(email);
+    const result = await sendEmail(email.current.state.value);
+    console.log(result);
+  };
 
   return (
     <Modal
@@ -109,7 +113,6 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         scrollToFirstError
       >
         <Form.Item
-          name="user_id"
           label="아이디"
           tooltip="아이디는 다른 사람에게 보이는 이름 정보입니다."
           rules={[
@@ -120,7 +123,14 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
             },
           ]}
         >
-          <Input />
+          <Row gutter={8}>
+            <Col span={14}>
+              <Input name="user_id" />
+            </Col>
+            <Col span={8}>
+              <Button onClick={emailCheck}>아이디 중복 확인</Button>
+            </Col>
+          </Row>
         </Form.Item>
 
         <Form.Item label="이메일">
@@ -139,11 +149,11 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
                   },
                 ]}
               >
-                <Input />
+                <Input ref={email} />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Button>이메일 인증</Button>
+              <Button onClick={emailCheck}>이메일 인증</Button>
             </Col>
           </Row>
         </Form.Item>
