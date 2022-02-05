@@ -89,7 +89,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
   };
 
   // const emailCheck = async (email) => {
-  //   await 
+  //   await
   // }
 
   return (

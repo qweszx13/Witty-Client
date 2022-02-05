@@ -44,7 +44,8 @@ export const idCheck = (userId) => http.post("/users/id_check", { userId });
 
 /**
  * 이메일 전송
- *
+ * @param {string} email 이메일
+ * @returns {Promise}
  */
 export const sendEmail = (email) => http.post("/users/sendEmail", { email });
 

@@ -1,11 +1,10 @@
 import logo from "../assets/images/logo.png";
 import background from "../assets/images/login-background.jpg";
 import { Button } from "antd";
-import { useState ,useEffect } from "react";
+import { useState, createRef } from "react";
 import SignupModal from "../components/SignupModal";
 import "../components/Left/style.css";
 import "../components/Right/style.css";
-import { Link } from "react-router-dom";
 import { login } from "../apis/users";
 
 function LoginPage() {
@@ -15,25 +14,21 @@ function LoginPage() {
     setIsModalVisible(true);
   };
 
-  let id,pw = "";
-  let newResult = "";
-  let [userId,setUserId] = useState("");
-  let [userPw,setUserPw] = useState("");
+  const [userIdInput, userPwInput] = [createRef(), createRef()];
 
-  useEffect(()=>{
-    (async ()=>{
-      const data = await login({
-        user_id:userId,
-        password:userPw
-      })
-      newResult = data.data.result
-      
-      if(newResult==="성공"){
-        window.location.replace("/")
-      }
-    })()
-  })
-
+  const userLogin = async () => {
+    try {
+      const user_id = userIdInput.current.value;
+      const password = userPwInput.current.value;
+      await login({ user_id, password });
+    } catch ({
+      response: {
+        data: { result },
+      },
+    }) {
+      alert(result);
+    }
+  };
 
   return (
     <>
@@ -51,24 +46,17 @@ function LoginPage() {
             className="Right-loginid-input"
             type="text"
             placeholder="ID"
-            onChange={(e)=>{
-              id=e.target.value
-            }}
+            ref={userIdInput}
           ></input>
           <p></p>
           <input
             className="Right-loginpw-input"
             type="text"
             placeholder="pw"
-            onChange={(e)=>{
-              pw=e.target.value
-            }}
+            ref={userPwInput}
           ></input>
           <p></p>
-          <Button type="primary"  onClick={()=>{
-            setUserId(id)
-            setUserPw(pw)
-          }}>
+          <Button type="primary" onClick={userLogin}>
             로그인
           </Button>
           <p></p>
