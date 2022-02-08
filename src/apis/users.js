@@ -37,10 +37,10 @@ export const logout = () => http.post("/users/logout");
 
 /**
  * 아이디 중복 체크
- * @param {string} userId 아이디 확인
+ * @param {string} user_id 아이디 확인
  * @returns {Promise}
  */
-export const idCheck = (userId) => http.post("/users/id_check", { userId });
+export const idCheck = (user_id) => http.post("/users/id_check", { user_id });
 
 /**
  * 이메일 전송
