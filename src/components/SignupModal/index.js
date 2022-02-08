@@ -10,7 +10,7 @@ import {
   Button,
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import { signup, sendEmail } from "../../apis/users";
+import { signup, sendEmail, idCheck } from "../../apis/users";
 import { createRef } from "react";
 
 const formItemLayout = {
@@ -90,10 +90,24 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
 
   const email = createRef();
 
-  const emailCheck = async () => {
+  const onEmailCheck = async () => {
     console.log(email);
     const result = await sendEmail(email.current.state.value);
     console.log(result);
+  };
+
+  const id = createRef();
+
+  const onIdCheck = async () => {
+    try {
+      const result = await idCheck(id.current.state.value);
+    } catch ({
+      response: {
+        data: { result },
+      },
+    }) {
+      alert(result);
+    }
   };
 
   return (
@@ -125,10 +139,10 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         >
           <Row gutter={8}>
             <Col span={14}>
-              <Input name="user_id" />
+              <Input ref={id} name="user_id" />
             </Col>
             <Col span={8}>
-              <Button onClick={emailCheck}>아이디 중복 확인</Button>
+              <Button onClick={onIdCheck}>아이디 중복 확인</Button>
             </Col>
           </Row>
         </Form.Item>
@@ -153,7 +167,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Button onClick={emailCheck}>이메일 인증</Button>
+              <Button onClick={onEmailCheck}>이메일 인증</Button>
             </Col>
           </Row>
         </Form.Item>
