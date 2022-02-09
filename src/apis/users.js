@@ -46,7 +46,7 @@ export const idCheck = (user_id) => http.post("/users/id_check", { user_id });
  * 로그인된 회원 정보
  * @returns {Promise}
  */
-export const auth = (user_id) => http.get("/users/auth");
+export const auth = () => http.get("/users/auth");
 
 /**
  * 이메일 전송
