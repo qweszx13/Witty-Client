@@ -6,9 +6,11 @@ import SignupModal from "../components/SignupModal";
 import "../components/Left/style.css";
 import "../components/Right/style.css";
 import { login } from "../apis/users";
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigate = useNavigate();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -21,6 +23,7 @@ function LoginPage() {
       const user_id = userIdInput.current.value;
       const password = userPwInput.current.value;
       await login({ user_id, password });
+      navigate('/');
     } catch ({
       response: {
         data: { result },
