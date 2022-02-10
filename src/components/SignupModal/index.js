@@ -66,6 +66,10 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     user_department,
     password,
   }) => {
+    console.log(user_id);
+    console.log(user_email);
+    console.log(user_department);
+    console.log(password);
     try {
       const result = await signup({
         user_id,
@@ -128,6 +132,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
       >
         <Form.Item
           label="아이디"
+          name="user_id"
           tooltip="아이디는 다른 사람에게 보이는 이름 정보입니다."
           rules={[
             {
