@@ -19,8 +19,8 @@ export function Right() {
           <p></p>
           <input
             className="Right-loginpw-input"
-            type="text"
-            placeholder="pw"
+            type="password"
+            placeholder="PW"
           ></input>
           <p></p>
           <Link to="/">

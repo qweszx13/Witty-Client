@@ -32,6 +32,7 @@
   border-radius: --px;
   box-shadow: -px -px -px color;
   letter-spacing: -px;
+  color:black;
 }
 .Right-loginpw-input {
   width: 12.5em;
@@ -41,6 +42,7 @@
   border-radius: --px;
   box-shadow: -px -px -px color;
   letter-spacing: -px;
+  color: black;
 }
 .Right-login-button {
   width: 13.3em;

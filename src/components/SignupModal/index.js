@@ -10,8 +10,8 @@ import {
   Button,
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import { signup, sendEmail, idCheck } from "../../apis/users";
-import { createRef } from "react";
+import { signup, sendEmail, idCheck, verification } from "../../apis/users";
+import { createRef,useEffect,useState } from "react";
 
 const formItemLayout = {
   labelCol: {
@@ -91,13 +91,49 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
   };
-
+  
+  const [myTimer,setMyTimer] = useState(300000);
   const email = createRef();
+  const [emailCheckInput,setEmailCheckInput] = useState(false);
+  const [myLoading,setMyLoading] = useState(false);//로딩
+  var regExp = /.+@daelim\.ac\.kr/;//규정
 
   const onEmailCheck = async () => {
-    console.log(email);
-    const result = await sendEmail(email.current.state.value);
-    console.log(result);
+    setMyLoading(true);
+    try{
+      if(regExp.test(email.current.state.value)){
+        const result = await sendEmail(email.current.state.value);
+        alert("이메일로 인증번호가 전송되었습니다.");
+        setEmailCheckInput(true);
+        setMyLoading(false);
+        function disabled(){
+          var input = document.getElementById("user_email");
+          input.setAttribute("readonly","readonly")
+        }
+        disabled();
+        setTimeout(() => {
+        setEmailCheckInput(false)
+        alert("입력시간이 초과되었습니다!")
+      }, myTimer);//3분
+      }else{
+        alert("이메일은 대림대학교 이메일로 인증해주세요!");
+        setMyLoading(false);
+      }
+    }catch({
+      response: {
+        data: { result }
+      },
+    }){
+      if(result === "이미 가입된 이메일 입니다."){
+        setEmailCheckInput(false);
+        setMyLoading(false);
+        alert(result);
+      }else{
+        setEmailCheckInput(false);
+        setMyLoading(false);
+        alert("이메일 인증이 잘못되었습니다.");
+      }
+    }
   };
 
   const id = createRef();
@@ -105,6 +141,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
   const onIdCheck = async () => {
     try {
       const result = await idCheck(id.current.state.value);
+      alert("사용가능한 아이디 입니다.");
     } catch ({
       response: {
         data: { result },
@@ -113,6 +150,35 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
       alert(result);
     }
   };
+
+  const userVerification = createRef();
+  
+
+  const onVerificationCheck = async () =>{
+    try{
+      const result = await verification(email.current.state.value,userVerification.current.state.value);
+      if(result.data.result === "인증번호를 확인 해 주세요"){
+        alert(result);
+      }else{
+        console.log(result);
+        alert("인증번호가 일치합니다!");
+        function disabled(){
+          var input = document.getElementById("user_verification");
+          input.setAttribute("readonly","readonly")
+        }
+        disabled();
+        setMyTimer(300000000);
+      }
+      
+      }catch({
+        response:{ 
+          data:{ result }
+      },
+    }) {
+      alert(result);
+    }
+
+  }
 
   return (
     <Modal
@@ -152,7 +218,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
           </Row>
         </Form.Item>
 
-        <Form.Item label="이메일">
+        <Form.Item label="이메일" style={ {marginBottom:"0px"} }>
           <Row gutter={8}>
             <Col span={16}>
               <Form.Item
@@ -166,17 +232,56 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
                     required: true,
                     message: "이메일을 입력해주세요!",
                   },
+                  {
+                    pattern:".+@daelim\.ac\.kr",
+                    message:"daelim.ac.kr 로 가입해주세요!",
+                  },
                 ]}
               >
-                <Input ref={email} />
+                <Input ref={email} id="user_email" />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Button onClick={onEmailCheck}>이메일 인증</Button>
+              <Button 
+              onClick={onEmailCheck}
+              loading={myLoading}
+              >이메일 인증</Button>
             </Col>
           </Row>
         </Form.Item>
 
+
+        {
+          emailCheckInput === true
+          ?(
+          <Form.Item label="이메일 인증" style={ {marginBottom:"0px"} }>
+            <Row gutter={8}>
+              <Col span={16}>
+                <Form.Item
+                  name="verification"
+                  rules={[
+                    {
+                      len:6,
+                      message:"인증번호는 6자 입니다!"
+                    },
+                    {
+                    required:true,
+                    message:"인증번호를 입력해주세요!"
+                  }
+                  ]}
+                >
+                  <Input ref={userVerification} id="user_verification"/>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Button onClick={onVerificationCheck}>인증번호 확인</Button>
+              </Col>
+            </Row>
+          </Form.Item>)
+          :null
+        }
+        
+        
         <Form.Item
           name="password"
           label="비밀번호"
