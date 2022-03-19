@@ -5,7 +5,7 @@ import { WittyModify } from "../WittysModify/index";
 
 
 function WittyHome(props) {
-  const [page,setPage] = useState(1);
+  const [page,setPage] = useState(0);
   const [content,setContent] = useState([]);//주요 컨텐츠
   const copyContent = [];//컨텐츠 담을 바구니
   const num = new Object;// 반복문 돌릴떄 컨텐트 박스 
@@ -13,6 +13,8 @@ function WittyHome(props) {
   const wittyContentDelete = async (wittyId) =>{
     try{
       const result = await wittysDelete(wittyId);
+      alert("위티 삭제 완료");
+      window.location.reload();
     }catch({
       response:{ 
         data:{ result }
@@ -33,9 +35,7 @@ function WittyHome(props) {
     }
   }
 
-  useEffect(()=>{
-    wittyContent(0);
-  },[])
+  
 
   function AddContent(num){//3페이지씩 증가 
     for(let i=2;i>-1;i--){
@@ -58,7 +58,6 @@ function WittyHome(props) {
                 ?<WittyModify wittyId={wittyId}/>
                 :null
               }
-              <button onClick={()=>{ isModifyVisible=!isModifyVisible; console.log(isModifyVisible)}}>수정</button>
               <button onClick={()=>{ wittyContentDelete(wittyId)}}>삭제</button>
             </div>
           </div> 
