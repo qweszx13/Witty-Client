@@ -1,6 +1,14 @@
 import "./style.css";
+import { useState } from "react";
+import React from "react";
+import MenuBarModal from "../MenuBarModal/index";
 
-function MenuBar() {
+
+
+function MenuBar(props) {
+  const [divModal,setDivModal] = useState(false);
+  
+
   return (
     <div className="menu_box">
       <div style={{ padding: "0px 20px 0px 20px" }}>
@@ -34,17 +42,26 @@ function MenuBar() {
           <br />
         </label>
       </div>
-      <div style={{ padding: "40px 20px 0px 20px" }}>
-        <button type="button" /*</div>onClick={}클릭*/ className="witty_button">
+      <div style={{ padding: "40px 20px 0px 20px" }} >
+        <button type="button" className="witty_button" onClick={()=>{setDivModal(!divModal)}}>
           Witty
         </button>
       </div>
+      
+      {
+        divModal === true
+        ?<MenuBarModal></MenuBarModal>
+        :null
+      }
+
       <div style={{ padding: "40px 20px 0px 20px" }}>
         <img src="##" alt="프로필사진"></img>
-        <p>이름, 전공 state 들어갈예정</p>
+        <p>{props.user.user_id}이름,{props.user.user_department}학과</p>
       </div>
     </div>
   );
 }
+
+
 
 export default MenuBar;

@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { signup, sendEmail, idCheck, verification } from "../../apis/users";
-import { createRef,useEffect,useState } from "react";
+import { createRef,useState } from "react";
 
 const formItemLayout = {
   labelCol: {
@@ -96,7 +96,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
   const email = createRef();
   const [emailCheckInput,setEmailCheckInput] = useState(false);
   const [myLoading,setMyLoading] = useState(false);//로딩
-  var regExp = /.+@daelim\.ac\.kr/;//규정
+  const regExp = /.+@email\.daelim\.ac\.kr/;//규정
 
   const onEmailCheck = async () => {
     setMyLoading(true);
@@ -107,7 +107,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         setEmailCheckInput(true);
         setMyLoading(false);
         function disabled(){
-          var input = document.getElementById("user_email");
+          const input = document.getElementById("user_email");
           input.setAttribute("readonly","readonly")
         }
         disabled();
@@ -163,7 +163,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         console.log(result);
         alert("인증번호가 일치합니다!");
         function disabled(){
-          var input = document.getElementById("user_verification");
+          const input = document.getElementById("user_verification");
           input.setAttribute("readonly","readonly")
         }
         disabled();
@@ -233,8 +233,8 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
                     message: "이메일을 입력해주세요!",
                   },
                   {
-                    pattern:".+@daelim\.ac\.kr",
-                    message:"daelim.ac.kr 로 가입해주세요!",
+                    pattern:".+@email\.daelim\.ac\.kr",
+                    message:"email.daelim.ac.kr로 가입해주세요",
                   },
                 ]}
               >

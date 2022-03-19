@@ -15,20 +15,19 @@ function MainPage() {
   });
 
   const fetchUser = async () => {
-      const res = await auth();
-      const result = res.data.result;
-
-      if(result !== '성공') {
-          alert('로그인이 필요한 서비스 입니다!');
-          navigate('/login');
-      }else {
-           const fetchedUser = res.data.user;
+      try{
+        const res = await auth();
+        const fetchedUser = res.data.user;
            setUser({
                user_id: fetchedUser.user_id,
                user_email: fetchedUser.user_email,
                user_department: fetchedUser.user_department
            });
+      }catch{
+        alert('로그인이 필요한 서비스 입니다!');
+          navigate('/login');
       }
+      
   }
 
   useEffect(() => {
@@ -36,10 +35,10 @@ function MainPage() {
   }, [])
   return (
     <>
-      <MenuBar></MenuBar>
-      <NavBar></NavBar>
-      <SearchBar></SearchBar>
-      <WittyHome></WittyHome>
+      <MenuBar user={user}></MenuBar>
+      <NavBar user={user}></NavBar>
+      <SearchBar user={user}></SearchBar>
+      <WittyHome user={user}></WittyHome>
     </>
   );
 }

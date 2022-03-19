@@ -10,4 +10,13 @@
   border-right: 2px solid rgba(172, 172, 172, 0.5);
   color: white;
   text-align: center;
+  overflow: hidden;
+}
+.content_box{
+  width: 100%;
+  height: auto;
+  background-color: cadetblue;
+  border: 1px solid white;
+  color: white;
+  margin-top: 10px;
 }
