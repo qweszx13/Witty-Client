@@ -1,0 +1,75 @@
+#wrap{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+#container1{
+    width: 100%;
+    height: 80%;
+    border-bottom: 1px solid black;
+}
+#container1 #profileBox{
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    overflow: hidden;
+}
+#container1 #profileBox img{
+    width: 60px;
+    height: 60px;
+}
+#container1 .name{
+    display:inline-block;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+#container1 .major{
+    display:inline-block;
+    font-size: 16px;
+    color: #777;
+}
+#container1 .date{
+    margin: 6px;
+    font-size: 16px;
+    color: #aaa;
+}
+#container1 .contents{
+    margin: 20px 10px;
+    font-size: 20px;
+}
+#wrapImg{
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+    /* 사진이 넘치는 부분은 안보이게 */
+}
+#wrapImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 이미지는 비율에 맞게 꽉 채워서 보여줌 */
+}
+#container2{
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid black;
+    
+}
+#container2 .hashTag{
+    float: left;
+    line-height: 60px;
+    margin: 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #378ef4;
+}
+#container2 .fa{
+    float: right;
+    margin: 10px;
+    font-size: 40px;
+}

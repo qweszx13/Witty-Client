@@ -1,0 +1,24 @@
+html {
+  --antd-wave-shadow-color: #363a3d;
+  --scroll-bar: 0;
+}
+.bt_Modal{
+  width: 45%;
+  height: 40px;
+  margin: 10px 5px 5px 5px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #bbb;
+  border-color:#777;
+  border: 1px solid #777;
+  border-radius: 5px;
+}
+.bt_Modal:hover{
+  border-color:#777;
+  background-color: #aaa;
+}
+.bt_Modal:focus{
+  border-color:#777;
+  background-color: #aaa;
+}

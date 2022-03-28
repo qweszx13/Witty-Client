@@ -1,0 +1,86 @@
+import "./style.css";
+import {useEffect, useState} from "react";
+import { auth } from "../../apis/users";
+
+import { useNavigate } from 'react-router-dom';
+import V2WittyNotification from "../../V2Components/V2WittyNotification/V2WittyNotification";
+import V2WittyProfile from "../../V2Components/V2WittyProfile/V2WittyProfile";
+import V2WittyAddContents from "../../V2Components/V2WittyAddContents/V2WittyAddContents";
+import V2WittyMenuBar from "../../V2Components/V2WittyMenuBar/V2WittyMenuBar"
+import V2SearchBar from "../../V2Components/V2WittySearchBar/V2SearchBar";
+
+
+function V2WittyPage(){
+  
+  const navigate = useNavigate();
+  const contentKey = 1;//로딩시 페이지 설정
+  const [user, setUser] = useState({
+      user_id: '',
+      user_email: '',
+      user_department: ''
+  });
+  
+  const fetchUser = async () => {
+    try{
+      const res = await auth();
+      const fetchedUser = res.data.user;
+         setUser({
+             user_id: fetchedUser.user_id,
+             user_email: fetchedUser.user_email,
+             user_department: fetchedUser.user_department
+         });
+    }catch{
+      alert('로그인이 필요한 서비스 입니다!');
+        navigate('/');
+    }  
+  }
+
+  const [selectMenu,setSelectMenu] = useState(1);
+  const [contentBox,setContentBox] = useState(null);
+  const getMenuNum = (num)=>{
+    setSelectMenu(num);
+  }
+  
+  useEffect(()=>{
+    fetchUser();
+    setContentBox(initContent(1));//페이지 기본값 
+  },[]);
+
+  useEffect(()=>{
+    console.log(selectMenu);
+    setContentBox(initContent(selectMenu));
+    
+  },[selectMenu]);
+
+  const initContent = (num)=>{
+    if(num===1){
+      return <V2WittyAddContents user={user} contentKey={contentKey}/>
+    }else if(num===2){
+      return <V2WittyProfile user={user}/>
+    }else if(num===3){
+      return <></>
+    }else if(num===4){
+      return <V2WittyNotification/>
+    }else{
+      return <></>
+    }
+    
+  }
+
+  
+
+  
+
+  return(
+    <div id="V2Main-Layout" >
+      <div id="V2Main-Container">
+        <V2SearchBar/>
+        <V2WittyMenuBar getMenuNum={getMenuNum}/>
+        <div id="V2Witty-Container">
+          {contentBox}    
+        </div>
+      </div>
+    </div >
+)}
+
+export default V2WittyPage;

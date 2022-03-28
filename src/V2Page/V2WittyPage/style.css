@@ -1,0 +1,19 @@
+#V2Main-Layout{
+    height: 100vh;
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+#V2Main-Layout>#V2Main-Container{
+    
+    width: 80%;
+    margin: 5% auto;
+    
+}
+#V2Main-Layout>#V2Main-Container>#V2Witty-Container{
+    
+    height: 100%;
+    width: 80%;
+    margin: 0 auto;
+    
+}

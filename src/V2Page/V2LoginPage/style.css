@@ -1,0 +1,77 @@
+*{margin: 0; padding: 0; font-family: "나눔스퀘어_ac Regular";}
+#wrap{
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+#wrap>#container{
+    text-align: center;
+    margin: 200px 0;
+}
+#wrap>#container>i{
+    /*로고 변경 예정*/
+}
+#wrap>#container>h1{
+    margin: 20px 0 10px;
+    font-family: "나눔스퀘어_ac ExtraBold";
+    font-size: 36px;
+}
+#wrap>#container>h2{
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+#idInput{
+    position: relative;
+    left:7px;
+}
+#idInput>.i{
+    position: relative;
+    right:30px;
+    color: #bbb;
+    z-index: 2;
+}
+#idInput>input{
+    position: relative;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    border-radius: 5px;
+    background: #eee;
+    border: none;
+} 
+
+#pwInput{
+    left:7px;
+    position: relative;
+}
+#pwInput>.i{
+    right:30px;
+    position: relative;
+    color: #bbb;
+    z-index: 2;
+}
+#pwInput>input{
+    position: relative;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    border-radius: 5px;
+    background: #eee;
+    border: none;
+} 
+#btnLogin{
+    width: 300px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    color: #fff;
+    background: #22b1e1;
+}
+#signIn>a{
+    font-family: "나눔스퀘어_ac ExtraBold";
+    color: #22b1e1;
+}
