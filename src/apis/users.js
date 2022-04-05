@@ -66,3 +66,27 @@ export const verification = (email, key) =>
     email,
     key,
   });
+
+/**
+ * 위티 좋아요
+ * @returns {Promise}
+ */
+export const like = (wittyId)=> http.post("/users/witty/like/"+parseInt(wittyId));
+
+/**
+ * 위티 좋아요 취소
+ * @returns {Promise}
+ */
+ export const unlike = (wittyId)=> http.post("/users/witty/unlike/"+parseInt(wittyId));
+
+ /**
+ * 팔로워 조회
+ * @returns {Promise}
+ */
+export const followers = (profileId) => http.get("/users/"+profileId+"/followers");
+
+/**
+ * 팔로잉 조회
+ * @returns {Promise}
+ */
+ export const following = (profileId) => http.get("/users/"+profileId+"/following");

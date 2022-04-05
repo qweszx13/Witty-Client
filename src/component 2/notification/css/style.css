@@ -1,0 +1,38 @@
+#wrap{
+    width: 600px;
+    height: 100%;
+}
+#container1{
+    width: 600px;
+    height: 60px;
+    border-bottom: 1px solid #aaa;
+    background-color: #ddd;
+}
+img{
+    width: 30px;
+    margin: 12px;
+}
+#container1 h1{
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 30px;
+    vertical-align: top;
+}
+#container2 .post{
+    border-bottom: 1px solid #aaa;
+}
+#container2 .post:hover{
+    background: #eee;
+}
+#container2 .title{
+    margin: 0 20px;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: normal;
+} 
+#container2 .date{
+    padding: 0 5px;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0 20px 5px 20px;
+}

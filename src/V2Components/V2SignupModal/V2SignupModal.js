@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { signup, sendEmail, idCheck, verification } from "../../apis/users";
-import { createRef,useState } from "react";
+import { useRef,useState } from "react";
 
 const formItemLayout = {
   labelCol: {
@@ -65,17 +65,23 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     user_email,
     user_department,
     password,
+    profile_imageUrl,
+    introduction
   }) => {
     console.log(user_id);
     console.log(user_email);
     console.log(user_department);
     console.log(password);
+    console.log(profile_imageUrl);
+    console.log(introduction);
     try {
       const result = await signup({
         user_id,
         user_email,
         user_department,
         password,
+        profile_imageUrl,
+        introduction
       });
       setIsModalVisible(false);
       SignupCompleteNotification(result.user_id);
@@ -93,7 +99,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
   };
   
   const [myTimer,setMyTimer] = useState(300000);
-  const email = createRef();
+  const email = useRef();
   const [emailCheckInput,setEmailCheckInput] = useState(false);
   const [myLoading,setMyLoading] = useState(false);//로딩
   const regExp = /.+@email\.daelim\.ac\.kr/;//규정
@@ -101,8 +107,8 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
   const onEmailCheck = async () => {
     setMyLoading(true);
     try{
-      if(regExp.test(email.current.state.value)){
-        const result = await sendEmail(email.current.state.value);
+      if(regExp.test(email.current.input.defaultValue)){
+        const result = await sendEmail(email.current.input.defaultValue);
         alert("이메일로 인증번호가 전송되었습니다.");
         setEmailCheckInput(true);
         setMyLoading(false);
@@ -136,11 +142,12 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     }
   };
 
-  const id = createRef();
+  const id = useRef();
 
   const onIdCheck = async () => {
+    console.log(id);
     try {
-      const result = await idCheck(id.current.state.value);
+      const result = await idCheck(id.current.input.defaultValue);
       alert("사용가능한 아이디 입니다.");
     } catch ({
       response: {
@@ -151,13 +158,13 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     }
   };
 
-  const userVerification = createRef();
+  const userVerification = useRef();
   const [userVerficationCheck,setUserVerificationCheck] = useState(false);
   
 
   const onVerificationCheck = async () =>{
     try{
-      const result = await verification(email.current.state.value,userVerification.current.state.value);
+      const result = await verification(email.current.input.defaultValue,userVerification.current.input.defaultValue);
       if(result.data.result === "인증번호를 확인 해 주세요"){
         alert(result);
       }else{
@@ -185,16 +192,16 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     <Modal
       title="회원가입"
       visible={isModalVisible}
-      onOk={handleOk}
+      onOk={()=>{handleOk()}}
       okText="회원가입"
-      onCancel={handleCancel}
+      onCancel={(()=>{handleCancel()})}
       cancelText="취소"
     >
       <Form
         {...formItemLayout}
         form={form}
         name="register"
-        onFinish={onFinish}
+        onFinish={()=>{onFinish()}}
         scrollToFirstError
       >
         <Form.Item
@@ -214,42 +221,44 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
               <Input ref={id} name="user_id" />
             </Col>
             <Col span={8}>
-              <Button onClick={onIdCheck}>아이디 중복 확인</Button>
+              <Button onClick={()=>{onIdCheck()}}>아이디 중복 확인</Button>
             </Col>
           </Row>
         </Form.Item>
 
-        <Form.Item label="이메일" style={ {marginBottom:"0px"} }>
-          <Row gutter={8}>
-            <Col span={16}>
-              <Form.Item
-                name="user_email"
-                rules={[
-                  {
-                    type: "email",
-                    message: "유효하지 않은 이메일 입니다!",
-                  },
-                  {
-                    required: true,
-                    message: "이메일을 입력해주세요!",
-                  },
-                  {
-                    pattern:".+@email\.daelim\.ac\.kr",
-                    message:"email.daelim.ac.kr로 가입해주세요",
-                  },
-                ]}
-              >
-                <Input ref={email} id="user_email" />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Button 
-              onClick={onEmailCheck}
-              loading={myLoading}
-              >이메일 인증</Button>
-            </Col>
-          </Row>
-        </Form.Item>
+  
+        <Form.Item
+          label="이메일"
+          name="user_email"
+          tooltip="위티는 대림대 전용 커뮤니케이션입니다 @email.daelim.ac.kr 로 가입해주세요"
+          rules={[
+            {
+              type: "email",
+              message: "유효하지 않은 이메일 입니다!",
+            },
+            {
+              required: true,
+              message: "이메일을 입력해주세요!",
+            },
+            {
+              pattern:".+@email\.daelim\.ac\.kr",
+              message:"email.daelim.ac.kr로 가입해주세요",
+            },
+          ]}
+        >
+        <Row gutter={8}>
+          <Col span={14}>
+            <Input ref={email} id="user_email" />
+          </Col>  
+          <Col span={8}>
+            <Button 
+            onClick={()=>{onEmailCheck()}}
+            loading={myLoading}
+            >이메일 인증</Button>
+          </Col>
+        </Row>
+      </Form.Item>
+            
         {()=>{
           emailCheckInput === true
           ?setUserVerificationCheck(true)
@@ -278,7 +287,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <Button onClick={onVerificationCheck}>인증번호 확인</Button>
+                <Button onClick={()=>{onVerificationCheck()}}>인증번호 확인</Button>
               </Col>
             </Row>
           </Form.Item>
@@ -321,6 +330,13 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
           ]}
         >
           <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="introduction"
+          label="자기소개"
+        >
+          <Input/>
         </Form.Item>
 
         <Form.Item

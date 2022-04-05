@@ -1,9 +1,11 @@
+import styles from "./style.module.css";
 import ReactLoading from "react-loading";
-import "./style.css";
 
 const V2WittyLoading = () => {
   return (
-      <ReactLoading id="loading" type="spin" color="#A593E0" />
+    <div className={styles.loading}>
+      <ReactLoading type="spin" color="#00c7ee" />
+    </div>
   );
 };
 

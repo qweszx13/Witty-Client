@@ -1,0 +1,37 @@
+.navbar_box {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  height: 30%;
+  color: white;
+  background-color: black;
+  border-left: 2px solid rgba(172, 172, 172, 0.5);
+  border-bottom: 2px solid rgba(172, 172, 172, 0.5);
+
+  color: black;
+}
+.navbar_box img {
+  color: white;
+}
+.navbar_box input {
+  background-color: black;
+  color: white;
+  border: 0px;
+  width: 80%;
+}
+.navbar_box a {
+  margin-left: 10%;
+  color: white;
+}
+.navbar_button img {
+  margin-left: 10px;
+}
+.navbar_button button {
+  float: right;
+  width: 20%;
+  height: 50px;
+  border-radius: 15px;
+  color: white;
+  background-color: #28a9e0;
+  border: 1px solid white;
+}

@@ -39,7 +39,7 @@ import http from "./instance";
  export const wittysContent = (page) => http.get("/wittys?page="+parseInt(page)+"&size=3");
 
  /** 
- * 위티 컨텐츠 조회
+ * 위티 컨텐츠 삭제
  * @returns {Promise}
  */
 

@@ -1,0 +1,22 @@
+#menuBar{
+    width: 600px;
+    height: 50px;
+    background-color: #eee;
+    text-align: center;
+}
+#menuBar button{
+    width: 140px;
+    height: 50px;
+    margin: 0px; padding: 0px;
+    border: none;
+}
+img{
+    width: 30px;
+    opacity: 40%;
+}
+img:hover{
+    opacity: 70%;
+}
+img:active{
+    opacity: 90%;
+}
