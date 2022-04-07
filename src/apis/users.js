@@ -1,4 +1,5 @@
 import http from "./instance";
+import axios from "axios";
 
 /**
  * 유저 정보
@@ -7,6 +8,8 @@ import http from "./instance";
  * @property {string} user_email
  * @property {string} user_department
  * @property {string} password
+ * @property {file} profile_imageUrl
+ * @property {string} introduction
  */
 
 /**
@@ -20,7 +23,12 @@ import http from "./instance";
  * @param {UserInfo} userInfo 유저 정보
  * @returns {Promise}
  */
-export const signup = (userInfo) => http.post("/users", userInfo);
+export const signup = (userInfo) => axios({
+  method: "post",
+  url: "http://localhost:8080/v2/users",
+  data: userInfo,
+  headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem("access_token") }
+});
 
 /**
  * 로그인

@@ -3,10 +3,13 @@ import V2WittyAddContents from "../V2WittyAddContents/V2WittyAddContents";
 import V2WittyCreateModal from "../V2WittyCreateModal/V2WittyCreateModal";
 
 
+
+
+
 function V2WittyProfile(props){
     const user = props.user;
-    const contentKey = 2;
-
+    const contentKey = 2;   
+    const imgUrl = props.user.profile_imageUrl;
   return(
       <>
         <div id={styles.wrap}>
@@ -16,7 +19,7 @@ function V2WittyProfile(props){
             </div>
             <div id={styles.container2}>
                 <div id={styles.profileBox}>
-                    <img className={styles.profileImg}></img>
+                    <img className={styles.profileImg} src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+imgUrl} alt="어라..이미지가.."></img>
                 </div>
                 <div className={styles.name}>{props.user.user_id}</div>
                 <div className={styles.major}>{props.user.user_department}</div>

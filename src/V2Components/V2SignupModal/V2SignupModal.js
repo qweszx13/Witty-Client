@@ -12,6 +12,7 @@ import {
 import { SmileOutlined } from "@ant-design/icons";
 import { signup, sendEmail, idCheck, verification } from "../../apis/users";
 import { useRef,useState } from "react";
+import { List } from "antd/lib/form/Form";
 
 const formItemLayout = {
   labelCol: {
@@ -65,24 +66,24 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     user_email,
     user_department,
     password,
-    profile_imageUrl,
+    profileImgUrl,
     introduction
   }) => {
     console.log(user_id);
     console.log(user_email);
     console.log(user_department);
     console.log(password);
-    console.log(profile_imageUrl);
+    console.log(files[0].uploadedFile);
     console.log(introduction);
     try {
-      const result = await signup({
-        user_id,
-        user_email,
-        user_department,
-        password,
-        profile_imageUrl,
-        introduction
-      });
+      const formData = new FormData();
+      formData.append("user_id",user_id);
+      formData.append("user_email",user_email);
+      formData.append("user_department",user_department);
+      formData.append("password",password);
+      formData.append("profileImgUrl",files.length && files[0].uploadedFile);
+      formData.append("introduction",introduction);
+      const result = await signup(formData);
       setIsModalVisible(false);
       SignupCompleteNotification(result.user_id);
     } catch ({ message }) {
@@ -145,7 +146,6 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
   const id = useRef();
 
   const onIdCheck = async () => {
-    console.log(id);
     try {
       const result = await idCheck(id.current.input.defaultValue);
       alert("사용가능한 아이디 입니다.");
@@ -188,6 +188,16 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
 
   }
 
+  const [files,setFiles] = useState([]);
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    setFiles([...files, { uploadedFile: file }]);
+  };
+  
+  
+
   return (
     <Modal
       title="회원가입"
@@ -201,7 +211,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
         {...formItemLayout}
         form={form}
         name="register"
-        onFinish={()=>{onFinish()}}
+        onFinish={onFinish}
         scrollToFirstError
       >
         <Form.Item
@@ -237,7 +247,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
               message: "유효하지 않은 이메일 입니다!",
             },
             {
-              required: true,
+              //required: true,
               message: "이메일을 입력해주세요!",
             },
             {
@@ -246,18 +256,18 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
             },
           ]}
         >
-        <Row gutter={8}>
-          <Col span={14}>
-            <Input ref={email} id="user_email" />
-          </Col>  
-          <Col span={8}>
-            <Button 
-            onClick={()=>{onEmailCheck()}}
-            loading={myLoading}
-            >이메일 인증</Button>
-          </Col>
-        </Row>
-      </Form.Item>
+          <Row gutter={8}>
+            <Col span={14}>
+              <Input ref={email} name="user_email" />
+            </Col>  
+            <Col span={8}>
+              <Button 
+              onClick={()=>{onEmailCheck()}}
+              loading={myLoading}
+              >이메일 인증</Button>
+            </Col>
+          </Row>
+        </Form.Item>
             
         {()=>{
           emailCheckInput === true
@@ -275,7 +285,7 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
                       message:"인증번호는 6자 입니다!"
                     },
                     {
-                    required:true,
+                    //required:true,
                     message:"인증번호를 입력해주세요!"
                     },
                     {
@@ -336,8 +346,20 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
           name="introduction"
           label="자기소개"
         >
-          <Input/>
+          <Input name="introduction"/>
         </Form.Item>
+        <Form.Item
+          label="프로필 이미지"
+          name="profileImgUrl"
+        >
+          <Input
+          type="file"
+          encType="multipart/form-data"
+          accept="image/png, image/gif, image/jpeg"
+          onChange={handleUpload}
+          ></Input>
+        </Form.Item>
+       
 
         <Form.Item
           name="user_department"
