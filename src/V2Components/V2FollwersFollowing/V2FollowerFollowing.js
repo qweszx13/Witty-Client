@@ -1,3 +1,48 @@
+import React from 'react';
+import { List, Avatar,Button,Row,Col, Divider } from 'antd';
+
+function V2FollowerFollowing() {
+  const data = [
+  {
+    title: 'Ant Design Title 1',
+  },
+  {
+    title: 'Ant Design Title 2',
+  },
+  {
+    title: 'Ant Design Title 3',
+  },
+  {
+    title: 'Ant Design Title 4',
+  },
+];
+  
+  return (
+    <div>
+       <Row justify='space-around'>
+         <Col span={8} ><Button style={{width:"100%"}}>팔로워</Button></Col>
+         <Col span={8}><Button style={{width:"100%"}}>팔로잉</Button></Col>
+        </Row>
+        <Divider />
+      <List
+        itemLayout="horizontal"
+        dataSource={data}
+        renderItem={item => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+            title={<div style={{position:"relative"}}><a href="https://ant.design">이름</a><Button style={{position:"absolute", right: "0px", top:"0px"}}>팔로우</Button></div>}
+            description="자기소개"
+          />
+        </List.Item>
+    )}
+  />
+    </div>
+  )
+}
+
+export default V2FollowerFollowing
+
 /*
 import { useEffect, useState } from "react";
 import { followers } from "../../apis/users/followers";

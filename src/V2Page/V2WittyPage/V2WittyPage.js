@@ -9,6 +9,7 @@ import V2WittyAddContents from "../../V2Components/V2WittyAddContents/V2WittyAdd
 //import V2FollowerFollowing from "../../V2Components/V2FollwersFollowing/V2FollowerFollowing";
 import V2WittyMenuBar from "../../V2Components/V2WittyMenuBar/V2WittyMenuBar"
 import V2SearchBar from "../../V2Components/V2WittySearchBar/V2SearchBar";
+import V2FollowerFollowing from "../../V2Components/V2FollwersFollowing/V2FollowerFollowing";
 
 
 function V2WittyPage(){
@@ -63,7 +64,7 @@ function V2WittyPage(){
     }else if(num===2){
       return <V2WittyProfile user={user}/>//프로필 및 유저 작성 위티 부분
     }else if(num===3){
-      return <></>//<V2FollowerFollowing user={user} />
+      return <><V2FollowerFollowing/></>//<V2FollowerFollowing user={user} />
     }else if(num===4){
       return <V2WittyNotification/>//공지사항
     }else{
