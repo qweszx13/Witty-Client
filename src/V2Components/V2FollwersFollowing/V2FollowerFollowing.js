@@ -23,16 +23,16 @@ function V2FollowerFollowing() {
          <Col span={8} ><Button style={{width:"100%"}}>팔로워</Button></Col>
          <Col span={8}><Button style={{width:"100%"}}>팔로잉</Button></Col>
         </Row>
-        <Divider />
+        <Divider style={{marginBottom:"0px"}}/>
       <List
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
         <List.Item>
           <List.Item.Meta
-            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-            title={<div style={{position:"relative"}}><a href="https://ant.design">이름</a><Button style={{position:"absolute", right: "0px", top:"0px"}}>팔로우</Button></div>}
-            description="자기소개"
+            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" size={64} style={{marginRight:"10px"}}/>}
+            title={<div style={{position:"relative"}}><a href="https://ant.design">이름</a><Button style={{position:"absolute", right: "0px", top:"50%", transform:"translate(-50%,0)"}}>팔로우</Button></div>}
+            description="자기소개 블라 블라 블라 블라 "
           />
         </List.Item>
     )}
