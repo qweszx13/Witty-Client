@@ -31,6 +31,18 @@ export const signup = (userInfo) => axios({
 });
 
 /**
+ * 회원정보수정
+ * @param {UserInfo} userInfo 유저 정보
+ * @returns {Promise}
+ */
+ export const userInfoModi = (userInfo,userId) => axios({
+  method: "patch",
+  url: "http://localhost:8080/v2/users/"+userId,
+  data: userInfo,
+  headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem("access_token") }
+});
+
+/**
  * 로그인
  * @param {UserLogin} userLogin 로그인 정보
  * @returns {Promise}
@@ -85,16 +97,29 @@ export const like = (wittyId)=> http.post("/users/witty/like/"+parseInt(wittyId)
  * 위티 좋아요 취소
  * @returns {Promise}
  */
- export const unlike = (wittyId)=> http.post("/users/witty/unlike/"+parseInt(wittyId));
+export const unlike = (wittyId)=> http.post("/users/witty/unlike/"+parseInt(wittyId));
 
  /**
  * 팔로워 조회
  * @returns {Promise}
  */
-export const followers = (profileId) => http.get("/users/"+profileId+"/followers");
+export const followers = (profileId) => http.get("/users/"+profileId+"/follower");
 
 /**
  * 팔로잉 조회
  * @returns {Promise}
  */
- export const following = (profileId) => http.get("/users/"+profileId+"/following");
+export const following = (profileId) => http.get("/users/"+profileId+"/following");
+
+ /**
+ * 팔로워수 조회
+ * @returns {Promise}
+ */
+export const followersNum = (profileId) => http.get("/users/follower/count/"+profileId);
+
+/**
+ * 팔로잉수 조회
+ * @returns {Promise}
+ */
+ export const followingNum = (profileId) => http.get("/users/following/count/"+profileId);
+

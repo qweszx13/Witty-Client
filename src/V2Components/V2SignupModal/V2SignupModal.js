@@ -10,9 +10,8 @@ import {
   Button,
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import { signup, sendEmail, idCheck, verification } from "../../apis/users";
+import { signup, sendEmail, idCheck, verification,userInfoModi } from "../../apis/users";
 import { useRef,useState } from "react";
-import { List } from "antd/lib/form/Form";
 
 const formItemLayout = {
   labelCol: {
@@ -51,7 +50,13 @@ const majarOptions = [
   { value: "컴퓨터 정보학부" },
 ];
 
-function SignupModal({ isModalVisible, setIsModalVisible }) {
+function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
+  const propsUserId = userId;
+  const setModiOb = {
+    title:"회원수정",
+    bt_input:"수정하기"
+  }
+
   const [form] = Form.useForm();
   const handleOk = () => {
     form.submit();
@@ -75,19 +80,36 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
     console.log(password);
     console.log(files[0].uploadedFile);
     console.log(introduction);
-    try {
-      const formData = new FormData();
-      formData.append("user_id",user_id);
-      formData.append("user_email",user_email);
-      formData.append("user_department",user_department);
-      formData.append("password",password);
-      formData.append("profileImgUrl",files.length && files[0].uploadedFile);
-      formData.append("introduction",introduction);
-      const result = await signup(formData);
-      setIsModalVisible(false);
-      SignupCompleteNotification(result.user_id);
-    } catch ({ message }) {
-      alert(message);
+    if(propsUserId!==undefined){
+      try {
+        const formData = new FormData();
+        formData.append("user_id",user_id);
+        formData.append("user_email",user_email);
+        formData.append("user_department",user_department);
+        formData.append("password",password);
+        formData.append("profileImgUrl",files.length && files[0].uploadedFile);
+        formData.append("introduction",introduction);
+        const result = await userInfoModi(formData,propsUserId);
+        setIsModalVisible(false);
+        alert('수정이 완료되었습니다')
+      } catch ({ message }) {
+        alert(message);
+      }
+    }else{
+      try {
+        const formData = new FormData();
+        formData.append("user_id",user_id);
+        formData.append("user_email",user_email);
+        formData.append("user_department",user_department);
+        formData.append("password",password);
+        formData.append("profileImgUrl",files.length && files[0].uploadedFile);
+        formData.append("introduction",introduction);
+        const result = await signup(formData);
+        setIsModalVisible(false);
+        SignupCompleteNotification(result.user_id);
+      } catch ({ message }) {
+        alert(message);
+      }
     }
   };
 
@@ -200,10 +222,10 @@ function SignupModal({ isModalVisible, setIsModalVisible }) {
 
   return (
     <Modal
-      title="회원가입"
+      title={propsUserId!==undefined?"프로필수정":"회원가입"}
       visible={isModalVisible}
       onOk={()=>{handleOk()}}
-      okText="회원가입"
+      okText={propsUserId!==undefined?setModiOb.bt_input:"프로필수정"}
       onCancel={(()=>{handleCancel()})}
       cancelText="취소"
     >

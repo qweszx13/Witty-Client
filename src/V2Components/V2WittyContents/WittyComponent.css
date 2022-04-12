@@ -1,0 +1,38 @@
+.button{
+    padding: 10px;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.number {
+    color: #b7d1db;
+}
+
+.hashTag{
+    font-size: 10px;
+    font-weight: bold;
+    color: #378ef4;
+    display:inline-block;
+    margin-right: 5px;
+}
+.img{
+    margin:0;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header{
+    justify-content: center;
+}
+
+
+#V2Witty-Container > div > div:nth-child(3) > div > div.ant-collapse-content.ant-collapse-content-active > div{
+    background-color: #126889;
+}
+
+#V2Witty-Container > div > div:nth-child(6) > div > div.ant-collapse-content.ant-collapse-content-active > div{
+    background-color: #004864;
+} 
+.ant-drawer-bottom.ant-drawer-open .ant-drawer-content-wrapper {
+    width: 50%;
+    top:30px;
+}

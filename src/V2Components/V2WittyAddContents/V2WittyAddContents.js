@@ -1,5 +1,6 @@
 import { wittysContent } from "../../apis/wittys";
 import V2WittyContents from "../V2WittyContents/V2WittyContents";
+import WittyComponent from "../V2WittyContents/WittyComponent";
 import V2WittyLoading from "../V2WittyLoading/V2WittyLoading";
 import {useEffect, useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
@@ -80,9 +81,9 @@ function V2WittyAddContents(props){
       setMyContent(copyMyContent,[...myContent])
     }else{
       for(let i=0;i<data.length;i++){ 
-        userContent.push(<V2WittyContents data = {data[i]} key={data[i].id}></V2WittyContents>)
+        userContent.push(<WittyComponent data = {data[i]} key={data[i].id}></WittyComponent>)
         if(myWitty===data[i].user.id){
-          copyMyContent.push(<V2WittyContents data = {data[i]} myWitty = {myWitty} key={data[i].id}></V2WittyContents>)
+          copyMyContent.push(<WittyComponent data = {data[i]} myWitty = {myWitty} key={data[i].id}></WittyComponent>)
         }
       }
       setContent(userContent,[...content])
@@ -100,7 +101,7 @@ function V2WittyAddContents(props){
 
   if(props.contentKey===1){
     return(
-      <div style={{width:"100%", alignItems: "center", margin:"0 auto",justifyContent: "center"}}>
+      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto"}}>
         <div>
           {content}
         </div>
@@ -112,7 +113,7 @@ function V2WittyAddContents(props){
     )
   }else{
     return(
-      <div style={{width:"100%", alignItems: "center", margin:"0 auto",justifyContent: "center"}}>
+      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto"}}>
         <div>
           {myContent}
         </div>
