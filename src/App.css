@@ -1,0 +1,12 @@
+.ant-collapse > .ant-collapse-item > .ant-collapse-header{
+    justify-content: center;
+}
+
+
+#V2Witty-Container > div > div:nth-child(3) > div > div.ant-collapse-content.ant-collapse-content-active > div{
+    background-color: #126889;
+}
+
+#V2Witty-Container > div > div:nth-child(6) > div > div.ant-collapse-content.ant-collapse-content-active > div{
+    background-color: #004864;
+}
