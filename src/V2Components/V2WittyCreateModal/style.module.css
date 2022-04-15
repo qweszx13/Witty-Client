@@ -2,6 +2,11 @@ html {
   --antd-wave-shadow-color: #363a3d;
   --scroll-bar: 0;
 }
+p{
+  display: inline-block;
+  color: #777;
+  font-size: 10px;
+}
 .bt_Modal{
   width: 45%;
   height: 40px;

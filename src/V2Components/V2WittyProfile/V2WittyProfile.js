@@ -39,8 +39,8 @@ function V2WittyProfile(props){
       };
     
     useEffect(()=>{
-      fNum();
-    },[])
+      fNum()
+    })
     
 
   return(

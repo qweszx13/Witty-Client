@@ -10,3 +10,9 @@
 #V2Witty-Container > div > div:nth-child(6) > div > div.ant-collapse-content.ant-collapse-content-active > div{
     background-color: #004864;
 }
+.ant-upload-picture-card-wrapper{
+    margin-top: 10px;
+    display: inline-block;
+    width: auto;
+}
+

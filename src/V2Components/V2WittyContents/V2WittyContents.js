@@ -9,13 +9,12 @@ import { useState } from "react";
 import {like,unlike} from "../../apis/users";
 import V2WittyDelete from "../V2WittyDelete/V2WittyDelete";
 import V2WittyModifyModal from "../V2WittyModifyModal/V2WittyModifyModal";
-import V2WittyComment from "../V2WittyComment/V2WittyComment";
 
 
 function V2WittyContents({data,myWitty}){
   const tags = data.tags;
   const wittyDelteId = data.id;
-
+  
   
 
   const displayCreatedAt = (createdAt) => {
@@ -121,7 +120,6 @@ function V2WittyContents({data,myWitty}){
             icon={solid('comment-dots')} 
             aria-hidden="true" 
             onClick={()=>{
-              
             }}
             />
             

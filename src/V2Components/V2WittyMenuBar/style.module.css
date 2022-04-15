@@ -1,9 +1,9 @@
-#menuBar_Layout{
+.menuBar_Layout{
     width: 100%;
     margin: auto;
 }
 
-#menuBar{
+.menuBar{
     width: 80%;
     height: 50px;
     background-color: #eee;
@@ -11,7 +11,7 @@
     margin-bottom: 1%;
     
 }
-#menuBar button{
+.menuBar button{
     width: 25%;
     height: 50px;
     margin: 0px; padding: 0px;

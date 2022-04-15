@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Comment, Avatar, Form, Input, Badge, Image, Drawer, Button } from 'antd';
-
+import { Comment, Avatar, Form, Input, Badge, Image, Drawer, Button, message } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import {like,unlike} from "../../apis/users";
+import {comments} from "../../apis/comment";
 import { LikeTwoTone, MessageTwoTone } from '@ant-design/icons';
 import WittyHeaderComponent from './WittyHeaderComponent'
 import './WittyComponent.css';
-import WittyComment from '../../WittyComment/WittyComment';
+import WittyComment from '../V2WittyComment/V2WittyComment';
+
 
 const {TextArea} = Input;
 
@@ -25,7 +26,12 @@ const Editor = ({ onChange, onSubmit, loading, commentInput }) => (
 );
 
 function WittyComponent({data,myWitty}) {
-  const wittyId = data.id;
+  const userProfileImg = data.user.profileImgUrl;
+  const userThumbNail = data.thumnailImgUri;
+  const newData = data
+  const [commentSwitch,setCommentSwitch] = useState(false);
+
+
   const[commentVisible, setCommentVisible] = useState(false);
   const[commentInput, setCommentInput] = useState('');
   const[loading, setLoading] = useState(false);
@@ -33,11 +39,27 @@ function WittyComponent({data,myWitty}) {
   // 댓글 보이게 해주는 함수
   const showDrawer = () => {
       setCommentVisible(true);
+      setCommentSwitch(!commentSwitch);
   }
 
   // 댓글 끄는 함수
   const onClose = () => {
       setCommentVisible(false);
+      setCommentSwitch(!commentSwitch);
+  }
+  // 댓글 작성 API
+  const userComment = async (comment,witty_id) => {
+    try{
+      const result =  await comments(comment,witty_id);
+      setCommentSwitch(!commentSwitch);
+      console.log(commentSwitch);
+    }catch ({
+      response: {
+        data: { result },
+      },
+    }) {
+      alert(result);
+    }
   }
 
   // 댓글 폼 값 찾아오는거
@@ -48,14 +70,14 @@ function WittyComponent({data,myWitty}) {
   // 댓글 제출
   const onSubmit = () => {
     if(commentInput === '') return;
-
     setLoading(true);
-
     setTimeout(() => {
       // 여기서 댓글 생성 API 호출 해야함 setTimeout은 걍 로딩중인거 표시한거임  
-      setLoading(false);
+      userComment(commentInput,data.id);
       setCommentInput('');
     }, 1000);
+    setLoading(false);
+    message.success("댓글 작성 완료");
   }
 
   const tags = data.tags;
@@ -67,6 +89,8 @@ function WittyComponent({data,myWitty}) {
       setLikeStatus(false)
     }
   },[])
+
+  
 
   const [likeNum,setLikeNum] = useState(data.likes);//좋아요 조회  최적화 요망
   const [likeStatus,setLikeStatus] = useState(true);
@@ -108,13 +132,12 @@ function WittyComponent({data,myWitty}) {
     setLikeStatus(false)
     userLikeStatus()
   }
-
   return (
       <div style={{width:"100%", border:"1px solid black", borderRadius:"10px", boxShadow:"0.2px 0.2px 0.3px 0.3px grey", marginBottom:"25px"}}>
           {/* 헤더 */}
           <WittyHeaderComponent data={data} myWitty={myWitty} />
           {/* 썸네일 */}
-          <Image width={"100%"} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" style={{marginBottom:"10px"}}/>
+          <Image width={"100%"} src={process.env.PUBLIC_URL + '/V2Thumbnail/V2Thumbnail'+userThumbNail} style={{marginBottom:"10px"}}/>
           {/* 내용 */}
           <div style={{padding: "10px", marginBottom:"16px"}}>
               {data.content}
@@ -145,7 +168,7 @@ function WittyComponent({data,myWitty}) {
           {/*댓글창*/}
           <Drawer height={650}  title="댓글입니더" placement="bottom" onClose={onClose} visible={commentVisible} style={{display:"flex", justifyContent:"center"}}>
             <Comment
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+                avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+userProfileImg} alt="Han Solo" />}
                 content={
                     <Editor
                         onChange={onChange}
@@ -154,7 +177,7 @@ function WittyComponent({data,myWitty}) {
                         commentInput={commentInput} />
           }
         />
-            <WittyComment wittyId={wittyId}/>
+            <WittyComment newData={newData} commentSwitch={commentSwitch} setCommentSwitch={setCommentSwitch} />
           </Drawer>
       </div>
   )

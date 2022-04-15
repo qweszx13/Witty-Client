@@ -1,4 +1,5 @@
 import http from "./instance";
+import axios from "axios";
 
 /**
  * 위티 정보
@@ -10,13 +11,15 @@ import http from "./instance";
 
 /**
  * 위티 생성
- * @param {string} content 위티 정보
- * @param {Array<String>} tags 태그 정보
+ * @param {wittyInfo} wittyInfo 위티 정보
  * @returns {Promise}
  */
- export const wittys = (content,tags) => http.post("/wittys", {
-   content,
-   tags,
+ export const wittys = (wittyInfo) => axios({
+   method: "post",
+   url: "http://localhost:8080/v2/wittys",
+   data: wittyInfo,
+   withCredentials: true,
+   headers: { "Content-Type": "multipart/form-data"}
  });
 
  /**

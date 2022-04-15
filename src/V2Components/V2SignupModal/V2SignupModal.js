@@ -225,7 +225,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
       title={propsUserId!==undefined?"프로필수정":"회원가입"}
       visible={isModalVisible}
       onOk={()=>{handleOk()}}
-      okText={propsUserId!==undefined?setModiOb.bt_input:"프로필수정"}
+      okText={propsUserId!==undefined?setModiOb.bt_input:"회원가입"}
       onCancel={(()=>{handleCancel()})}
       cancelText="취소"
     >

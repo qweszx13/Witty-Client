@@ -7,6 +7,7 @@ import V2WittyModifyModal from "../V2WittyModifyModal/V2WittyModifyModal";
 import React from 'react'
 
 function WittyHeaderComponent({data,myWitty}) {
+  const userProfileImg = data.user.profileImgUrl;
   const wittyDelteId = data.id;
 
   const displayCreatedAt = (createdAt) => {
@@ -33,7 +34,7 @@ function WittyHeaderComponent({data,myWitty}) {
   return (
     <div style={{display: "flex", marginTop:"10px",marginLeft:"10px",marginBottom: "10px",width:"100%"}}>
         <div size={64} style={{marginRight: "12px"}}>
-          {/* <img className="profileImg" src="img/a.png"></img> 프로필 사진*/}
+           <img className="profileImg" src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+userProfileImg}></img> 
         </div>
         <div>
             <div className='user-profile' style={{display: "flex",width:"100%"}}>
