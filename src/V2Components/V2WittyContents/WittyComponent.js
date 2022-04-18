@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {like,unlike} from "../../apis/users";
 import {comments} from "../../apis/comment";
 import { LikeTwoTone, MessageTwoTone } from '@ant-design/icons';
+import { commentLength } from "../../apis/comment";
 import WittyHeaderComponent from './WittyHeaderComponent'
 import './WittyComponent.css';
 import WittyComment from '../V2WittyComment/V2WittyComment';
@@ -88,6 +89,7 @@ function WittyComponent({data,myWitty}) {
     }else{
       setLikeStatus(false)
     }
+    allComment();
   },[])
 
   
@@ -109,6 +111,26 @@ function WittyComponent({data,myWitty}) {
   const userUnLike = async () => {
     try{
       const result =  await unlike(data.id);
+    }catch ({
+      response: {
+        data: { result },
+      },
+    }) {
+      alert(result);
+    }
+  }
+
+  const [commentLen,setCommentLen] = useState("");
+
+  const allComment = async () => {
+    try{
+      const result =  await commentLength(data.id);
+      if(result.data.length<100){
+        setCommentLen(result.data.length+"");
+      }else{
+        setCommentLen("99+");
+      }
+      
     }catch ({
       response: {
         data: { result },
@@ -161,7 +183,7 @@ function WittyComponent({data,myWitty}) {
                   }
                 }/> 
             </Badge>  
-            <Badge count={10}>
+            <Badge count={commentLen}>
                 <MessageTwoTone className='button' style={{fontSize:"1.25rem"}} onClick={showDrawer}/>
             </Badge>
           </div> 

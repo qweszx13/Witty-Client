@@ -41,7 +41,7 @@ function V2WittyCommentModify({newData}){
 
   return (
     <>
-      <a  onClick={showModal} style={{color:"black", margin:"0px 10px"}} >수정</a>
+      <a  onClick={showModal} style={{color:"rgba(0, 0, 0, 0.45)",margin:"0px 5px"}} >수정</a>
       <Modal title="댓긇 수정" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} cancelText={"작성 취소"} okText={"댓글 수정 완료"}>
       <TextArea
           showCount maxLength={100}

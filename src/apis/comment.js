@@ -39,3 +39,24 @@ export const commentDelete = (commentId) => http.delete("/comments/"+commentId)
  */
  export const commentContents = (wittyId,page) => http.get("/comments/"+wittyId+"?page="+parseInt(page)+"&size=8")
 
+ /**
+ * 댓글 좋아요
+ * @param {string} commentId
+ * @returns {Promise}
+ */
+ export const commentLike = (commentId) => http.post("/users/comment/like/"+commentId);
+
+  /**
+ * 댓글 좋아요취소
+ * @param {string} commentId
+ * @returns {Promise}
+ */
+ export const commentUnlike = (commentId) => http.post("/users/comment/unlike/"+commentId);
+
+
+ /**
+ * 댓글 갯수 조회
+ * @returns {Promise}
+ */
+ export const commentLength = (wittyId) => http.get("/comments/"+wittyId+"?page=0&size=100")
+

@@ -1,4 +1,4 @@
-import {commentDelete} from "../../apis/comment"
+import {commentDelete,commentLike,commentUnlike} from "../../apis/comment"
 import React, { createElement, useEffect, useState } from 'react';
 import { Comment, Tooltip, Avatar, message } from 'antd';
 import Moment from 'react-moment';
@@ -6,9 +6,17 @@ import V2WittyCommentModify from "../V2WittyCommentModify/V2WittyCommentModify";
 import 'moment-timezone';
 import { LikeOutlined, LikeFilled } from '@ant-design/icons';
 
-function V2WittyCommnetAdd({data,deleteSwitch,setDeleteSwitch}){
+
+function V2WittyCommnetAdd({data}){
   const newData = data;
   const imgUrl = data.user.profileImgUrl;
+  const likeSta = ()=>{
+    if(data.likeStatus === 1){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   const displayCreatedAt = (createdAt) => {
     let startTime = new Date(createdAt);
@@ -42,19 +50,47 @@ function V2WittyCommnetAdd({data,deleteSwitch,setDeleteSwitch}){
     }
   }
 
+  async function cmLike(commentId){
+    try{
+      const result = await commentLike(commentId);
+    }catch({
+      response:{ 
+        data:{ result }
+    },
+    }) {
+      alert(result);
+    }
+  }
+
+  async function cmUnlike(commentId){
+    try{
+      const result = await commentUnlike(commentId);
+    }catch({
+      response:{ 
+        data:{ result }
+    },
+    }) {
+      alert(result);
+    }
+  }
+
+  
+
  
-  const [likeYN, setlikeYN] = useState(false); // 좋아요 여부 (좋아요 버튼 바뀜)
-  const [commentLike,setCommentLike] = useState(0);
+  const [likeYN, setlikeYN] = useState(likeSta()); // 좋아요 여부 (좋아요 버튼 바뀜)
+  const [userCommentLike,setUserCommentLike] = useState(data.likes);
 
   // 좋아요 누르면 동작하는 함수 API 요청해서 변화 필요
   const like = () => {
     if(likeYN) {
       //좋아요 취소
-        setCommentLike(commentLike-1);
+        cmUnlike(data.id);
+        setUserCommentLike(userCommentLike-1);
         setlikeYN(false);
     }else{
       //좋아요
-        setCommentLike(commentLike+1);
+        cmLike(data.id);
+        setUserCommentLike(userCommentLike+1);
         setlikeYN(true);
     }
   };
@@ -69,7 +105,7 @@ function V2WittyCommnetAdd({data,deleteSwitch,setDeleteSwitch}){
     <Tooltip key="comment-basic-like" title="좋아요">
       <span onClick={like}>
         {createElement(likeYN ? LikeFilled : LikeOutlined)}
-        <span className="comment-action" style={{paddingLeft: "3px"}}>{commentLike}</span>
+        <span className="comment-action" style={{paddingLeft: "3px"}}>{userCommentLike}</span>
       </span>
     </Tooltip>,
     <span key="comment-basic-reply-to2" onClick={()=>{fDelete()}}>삭제</span>,
