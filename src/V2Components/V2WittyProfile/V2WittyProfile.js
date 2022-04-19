@@ -5,7 +5,7 @@ import {followingNum} from "../../apis/users";
 import {followersNum} from "../../apis/users";
 import { useEffect, useState } from "react";
 import SignupModal from "../V2SignupModal/V2SignupModal";
-import { Layout } from 'antd';
+import {Divider, Layout} from 'antd';
 
 
 const { Header, Footer, Content } = Layout;

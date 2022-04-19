@@ -7,8 +7,16 @@ const { Header } = Layout;
 function V2WittyMenuBar(props){
 
   return(
-    <Layout style={{backgroundColor:"white",width:"100%"}} >
-      <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']} style={{width:"80%",margin:"0px auto",textAlign:"center"}}>
+    <Layout style={{backgroundColor:"#e9f0f5",width:"100%"}} >
+      <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']} style={{
+          width:"80%",
+          margin:"0px auto",
+          textAlign:"center",
+          backgroundColor:"#209dcd",
+          borderRadius:"10px",
+          borderBottomLeftRadius:"0px",
+          borderBottomRightRadius:"0px"
+      }}>
         <Menu.Item onClick={()=>{props.getMenuNum(1)}} style={{textAlign:"center",width:"25%"}} key="1"><img src={require("../../assets/images/img/home.png")}></img></Menu.Item>
         <Menu.Item onClick={()=>{props.getMenuNum(2)}} style={{textAlign:"center",width:"25%"}} key="2"><img src={require("../../assets/images/img/user.png")}></img></Menu.Item>
         <Menu.Item onClick={()=>{props.getMenuNum(3)}} style={{textAlign:"center",width:"25%"}} key="3"><img src={require("../../assets/images/img/users.png")}></img></Menu.Item>

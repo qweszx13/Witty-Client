@@ -87,7 +87,9 @@ function V2WittyPage(){
         <V2SearchBar searching={searching}/>
         <V2WittyMenuBar getMenuNum={getMenuNum}/>
         <div id="V2Witty-Container">
-          {contentBox}    
+            <div id="V2Witty-Content">
+                {contentBox}
+            </div>
         </div>
       </div>
     </div >

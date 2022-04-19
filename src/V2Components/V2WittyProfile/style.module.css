@@ -78,6 +78,7 @@
 }
 #container4{
     text-align: center;
+    border-bottom: 1px solid #aaa;
 }
 #container4 .btn{
     width: 45%;
@@ -86,12 +87,12 @@
     font-size: 18px;
     font-weight: bold;
     color: #fff;
-    background-color: #bbb;
+    background-color: #209dcd;
     border: 1px solid #777;
     border-radius: 5px;
 }
 #container4 .btn:hover{
-    background-color: #aaa;
+    opacity: 0.9;
 }
 .ant-layout-header{
     background-color: #ffffff;

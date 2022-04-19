@@ -4,13 +4,20 @@
 }
 #V2Main-Layout>#V2Main-Container{
     
-    width: 80%;
+    width: 100%;
     margin: 5% auto;
     
 }
 #V2Main-Layout>#V2Main-Container>#V2Witty-Container{
-    background-color: #EFF2F5;
+    background-color: white;
     height: 100%;
     width: 80%;
     margin: 0 auto;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+}
+
+#V2Witty-Content{
+    border-radius: 20px;
 }

@@ -59,9 +59,9 @@ const V2WittyCreateModal = () => {
   
   return (
     <>
-      <Button type="primary" onClick={showModal} className={styles.bt_Modal}>
+      <button type="primary" onClick={showModal} className={styles.bt_Modal}>
         새 위티 쓰기
-      </Button>
+      </button>
       <Modal title="새 위티 쓰기" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} cancelText={"작성 취소"} okText={"위티 작성"}>
         <TextArea
           showCount maxLength={200}

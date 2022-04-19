@@ -14,16 +14,12 @@ p{
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background-color: #bbb;
+  background-color: #209dcd;
   border-color:#777;
   border: 1px solid #777;
   border-radius: 5px;
 }
 .bt_Modal:hover{
-  border-color:#777;
-  background-color: #aaa;
+  opacity: 0.9;
 }
-.bt_Modal:focus{
-  border-color:#777;
-  background-color: #aaa;
-}
+

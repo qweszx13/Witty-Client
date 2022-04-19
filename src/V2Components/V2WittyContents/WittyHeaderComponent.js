@@ -83,7 +83,7 @@ function WittyHeaderComponent({data,myWitty,searchContentKey}) {
                       float:"right",
                       marginLeft:"auto",
                       marginRight:"20px",
-                      display:buttonStatus,
+
                     }} onClick={()=>{
                       setFollow(data.user.id);
                     }}>{userFollowStatus}</Button>

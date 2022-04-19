@@ -55,8 +55,8 @@ function V2FollowerFollowing(props) {
   }
 
   return (
-    <div>
-       <Row justify='space-around'>
+      <>
+       <Row justify='space-around' style={{paddingTop:"18px"}}>
          <Col span={8} ><Button style={{width:"100%"}} onClick={()=>{setFlagFollow(true)}}>팔로워</Button></Col>
          <Col span={8}><Button style={{width:"100%"}} onClick={()=>{setFlagFollow(false)}}>팔로잉</Button></Col>
         </Row>
@@ -67,7 +67,7 @@ function V2FollowerFollowing(props) {
         itemLayout="horizontal"
         dataSource={userFollowers}
         renderItem={item => (
-          <List.Item>
+          <List.Item style={{padding: "0 20px"}}>
             <List.Item.Meta
               avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
@@ -75,9 +75,9 @@ function V2FollowerFollowing(props) {
                   props.user.user_id === item.id
                   ?null
                   :item.followState === 1
-                    ?<Button style={{position:"absolute", right: "0px", top:"0px"}} onClick={
+                    ?<Button style={{position:"absolute", right: "0px", top:"10px"}} onClick={
                       ()=>{deleteFollower(item.id)}}>팔로우취소</Button>
-                    :<Button style={{position:"absolute", right: "0px", top:"0px"}}>팔로우</Button>
+                    :<Button style={{position:"absolute", right: "0px", top:"10px"}}>팔로우</Button>
                 }
                 </div>}
               description={item.department}
@@ -107,8 +107,7 @@ function V2FollowerFollowing(props) {
           )}
         />
       }
-
-    </div>
+      </>
   )
 }
 

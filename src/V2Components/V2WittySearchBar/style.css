@@ -4,17 +4,27 @@
 }
 #bar_Layout{
     width: 100%;
-    
+    height: 40px;
+    position: relative;
+}
+/*위치 변경 필요*/
+#search {
+    width: 30%;
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 82px;
 }
 #bar .searchBar{
-    width: 80%;
+    width: 100%;
     height: 40px;
     padding-left: 20px;
     padding-right: 60px;
-    font-size: 26px;
+    font-size: 1rem;
+    font-weight: 800;
     border: none;
     border-radius: 50px;
-    background-color: #f3f3f3;
+    background-color: white;
     position: relative;
     left: 2%;
 }
@@ -26,8 +36,10 @@
     outline: 2px solid #ddd;
 }
 #bar .fa{
-    position: relative;
-    right:40px;
+    position: absolute;
+    right:10px;
+    top: 7px;
     font-size: 26px;
+    color: #808080;
     opacity: 20%;
 }

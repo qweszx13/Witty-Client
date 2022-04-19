@@ -1,7 +1,18 @@
+body {
+    background-color: #E9F0F5;
+}
 .ant-collapse > .ant-collapse-item > .ant-collapse-header{
     justify-content: center;
 }
 
+#V2Main-Container {
+    max-width: 730px;
+}
+
+#V2Witty-Container {
+    max-width: 730px;
+    background: white;
+}
 
 #V2Witty-Container > div > div:nth-child(3) > div > div.ant-collapse-content.ant-collapse-content-active > div{
     background-color: #126889;
@@ -16,14 +27,31 @@
     width: auto;
 }
 .ant-layout-header{
-    background-color: #f0f2f5;
+    background-color: white;
     border-bottom: 1px solid #AAAAAA;
 }/*프로필 상단 profile 글자 부분*/
 .ant-layout-content{
-    
+    background-color: white;
     padding-bottom: 15px;
     border-bottom: 5px solid white;
 }
 .ant-layout-footer{
+    background-color: white;
     padding: 24px 0px;
+}
+
+.ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
+    display: none;
+}
+
+#V2Witty-Container {
+    background-color: white;
+}
+
+.ant-list-item {
+    padding: 10px 20px;
+}
+
+#root {
+    background-color: #e9f0f5;
 }

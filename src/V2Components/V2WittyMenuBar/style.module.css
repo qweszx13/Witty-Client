@@ -27,3 +27,7 @@ img:hover{
 img:active{
     opacity: 90%;
 }
+
+.ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
+    display: none;
+}
