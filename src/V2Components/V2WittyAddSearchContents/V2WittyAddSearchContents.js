@@ -1,15 +1,15 @@
-import { wittysContent } from "../../apis/wittys";
+import { wittysSearchContent } from "../../apis/wittys";
 import WittyComponent from "../V2WittyContents/WittyComponent";
 import V2WittyLoading from "../V2WittyLoading/V2WittyLoading";
 import {useEffect, useState} from "react";
-import { v4 as uuidv4 } from 'uuid';
 import { Result } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
-import { MehOutlined } from '@ant-design/icons';
 
+import { v4 as uuidv4 } from 'uuid';
 
-
-function V2WittyAddContents(props){
+function V2WittyAddSearchContents(props){
+  const userSearchTag = props.userSearch;
+  const searchContent = 1;// 검색한경우 팔로우 버튼 추가를 위함
   const [loading,setLoading] = useState(false);
   let page = 0;
   const myWitty = props.user.user_id;
@@ -52,12 +52,10 @@ function V2WittyAddContents(props){
 
   const [content,setContent] = useState([]);//주요 컨텐츠
   const userContent = [];
-  const [myContent,setMyContent] = useState([]);//나의 컨텐츠
-  const copyMyContent = [];
   
   const showContent = async (nowPage) => {
     try{
-      const result =  await wittysContent(nowPage);
+      const result =  await wittysSearchContent(nowPage,userSearchTag);
       const copyResult = result.data;
       if(copyResult.length===0){
         setobserverBreak(true);
@@ -72,28 +70,19 @@ function V2WittyAddContents(props){
   const addContent = (data)=>{
     if(data.length === 0){
       userContent.push(
-        <Result
-          icon={<SmileOutlined style={{color:"#6AAFE6"}}/>}
-          title="팔로우한 사람들의 위티가 더이상 존재하지않아요!"
-        />
-      )
-      copyMyContent.push(
-        <Result
-          icon={<MehOutlined  style={{color:"#6AAFE6"}}/>}
-          title="내가 공유한 위티가 더이상 존재하지않아요!"
-        />
+        <div key={uuidv4()}>
+           <Result
+              icon={<SmileOutlined style={{color:"#6AAFE6"}}/>}
+              title="검색하신 태그 검색결과 찾은게 없어요!"
+           />
+        </div>
       )
       setContent(userContent,[...content])
-      setMyContent(copyMyContent,[...myContent])
     }else{
       for(let i=0;i<data.length;i++){ 
-        userContent.push(<WittyComponent data = {data[i]} key={data[i].id}></WittyComponent>)
-        if(myWitty===data[i].user.id){
-          copyMyContent.push(<WittyComponent data = {data[i]} myWitty = {myWitty} key={data[i].id}></WittyComponent>)
-        }
+        userContent.push(<WittyComponent data = {data[i]} searchContent={searchContent} key={data[i].id}></WittyComponent>)
       }
       setContent(userContent,[...content])
-      setMyContent(copyMyContent,[...myContent])
     }
   }
 
@@ -105,32 +94,19 @@ function V2WittyAddContents(props){
     )
   }
 
-  if(props.contentKey===1){
-    return(
-      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto",padding:"24px 0px"}}>
-        <div>
-          {content}
-        </div>
-        {observerBreak === false?setObserver():null}
-        <div style={{position:"absolute",left:"48%"}}>
-          {loading?<V2WittyLoading/>:null}
-        </div>
-      </div>    
-    )
-  }else{
-    return(
-      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto"}}>
-        <div>
-          {myContent}
-        </div>
-        {observerBreak === false?setObserver():null}
-        <div style={{position:"absolute",left:"48%"}}>
-          {loading?<V2WittyLoading/>:null}
-        </div>
-      </div>    
-    )
-  }
   
+  return(
+    <div style={{width:"100%", maxWidth:"512px",margin:"0 auto",padding:"24px 0px"}}>
+      <div>
+        {content}
+      </div>
+      {observerBreak === false?setObserver():null}
+      <div style={{position:"absolute",left:"48%"}}>
+        {loading?<V2WittyLoading/>:null}
+      </div>
+    </div>    
+  )
 }
 
-export default V2WittyAddContents;
+
+export default V2WittyAddSearchContents;

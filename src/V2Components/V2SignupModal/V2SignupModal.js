@@ -83,9 +83,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
     if(propsUserId!==undefined){
       try {
         const formData = new FormData();
-        formData.append("user_id",user_id);
         formData.append("user_email",user_email);
-        formData.append("user_department",user_department);
         formData.append("password",password);
         formData.append("profileImgUrl",files.length && files[0].uploadedFile);
         formData.append("introduction",introduction);
@@ -236,7 +234,9 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
         onFinish={onFinish}
         scrollToFirstError
       >
-        <Form.Item
+        {propsUserId!==undefined
+          ?null
+          :<Form.Item
           label="아이디"
           name="user_id"
           tooltip="아이디는 다른 사람에게 보이는 이름 정보입니다."
@@ -257,6 +257,8 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             </Col>
           </Row>
         </Form.Item>
+        }
+        
 
   
         <Form.Item
@@ -382,8 +384,9 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
           ></Input>
         </Form.Item>
        
-
-        <Form.Item
+        {propsUserId!==undefined
+          ?null
+          :<Form.Item
           name="user_department"
           label="학과"
           rules={[{ required: true, message: "학과를 선택해 주세요!" }]}
@@ -399,8 +402,10 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             }
           />
         </Form.Item>
-
-        <Form.Item
+        }
+        {propsUserId!==undefined
+          ?null
+          :<Form.Item
           name="agreement"
           valuePropName="checked"
           rules={[
@@ -419,6 +424,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             <a href="">개인정보 처리방침</a>에 동의합니다
           </Checkbox>
         </Form.Item>
+        }  
       </Form>
     </Modal>
   );

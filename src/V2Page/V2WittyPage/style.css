@@ -1,7 +1,6 @@
 #V2Main-Layout{
     width: 80%;
     margin: 0 auto;
-    border: 1px solid black;
 }
 #V2Main-Layout>#V2Main-Container{
     
@@ -10,7 +9,7 @@
     
 }
 #V2Main-Layout>#V2Main-Container>#V2Witty-Container{
-    
+    background-color: #EFF2F5;
     height: 100%;
     width: 80%;
     margin: 0 auto;

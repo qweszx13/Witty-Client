@@ -26,7 +26,8 @@ const Editor = ({ onChange, onSubmit, loading, commentInput }) => (
   </>
 );
 
-function WittyComponent({data,myWitty}) {
+function WittyComponent({data,myWitty,searchContent}) {
+  const searchContentKey = searchContent;
   const userProfileImg = data.user.profileImgUrl;
   const userThumbNail = data.thumnailImgUri;
   const newData = data
@@ -157,7 +158,7 @@ function WittyComponent({data,myWitty}) {
   return (
       <div style={{width:"100%", border:"1px solid black", borderRadius:"10px", boxShadow:"0.2px 0.2px 0.3px 0.3px grey", marginBottom:"25px"}}>
           {/* 헤더 */}
-          <WittyHeaderComponent data={data} myWitty={myWitty} />
+          <WittyHeaderComponent data={data} myWitty={myWitty} searchContentKey={searchContentKey} />
           {/* 썸네일 */}
           <Image width={"100%"} src={process.env.PUBLIC_URL + '/V2Thumbnail/V2Thumbnail'+userThumbNail} style={{marginBottom:"10px"}}/>
           {/* 내용 */}

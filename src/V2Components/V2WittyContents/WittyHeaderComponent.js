@@ -1,12 +1,16 @@
-import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar,Button,message} from 'antd';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import {follow} from "../../apis/users";
 import V2WittyDelete from "../V2WittyDelete/V2WittyDelete";
 import V2WittyModifyModal from "../V2WittyModifyModal/V2WittyModifyModal";
+import { useState } from 'react';
 import React from 'react'
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
-function WittyHeaderComponent({data,myWitty}) {
+function WittyHeaderComponent({data,myWitty,searchContentKey}) {
+  const [userFollowStatus,setUserFollowStatus] = useState("팔로우");
+  const [buttonStatus,setButtonStatus] = useState("inline-block");
   const userProfileImg = data.user.profileImgUrl;
   const wittyDelteId = data.id;
 
@@ -29,6 +33,20 @@ function WittyHeaderComponent({data,myWitty}) {
       return <Moment fromNow>{startTime}</Moment>;
     }
   };
+
+  const setFollow = async (followId) => {
+    try{
+      const result =  await follow(followId);
+      setUserFollowStatus("✔")
+      message.success("팔로우 신청 완료");
+    }catch ({
+      response: {
+        data: { result },
+      },
+    }) {
+      message.warn("이미 팔로우한 유저입니다.");
+    }
+  }
  
      
   return (
@@ -36,24 +54,40 @@ function WittyHeaderComponent({data,myWitty}) {
         <div size={64} style={{marginRight: "12px"}}>
            <img className="profileImg" src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+userProfileImg}></img> 
         </div>
-        <div>
+        <div style={{width:"100%"}}>
             <div className='user-profile' style={{display: "flex",width:"100%"}}>
                 <h3 style={{fontSize:"1.17rem", marginRight:"4px"}}>{data.user.id}</h3> {/*사용자 이름*/}
                 <h3 style={{fontSize:"0.8rem",display:"flex", alignItems:"center", color:"grey"}}>{data.user.department}</h3> {/*학부*/}
-               
+                
                 {
                   myWitty === data.user.id
                   ?<div style={{
                     fontSize:"0.8rem",
                     textAlign:"center",
-                    display:"inline-block",
-                    marginLeft:"270px"
+                    display:"flex",
+                    float:"right",
+                    marginLeft:"auto",
+                    marginRight:"10px"
                     
                     }}>
                     <V2WittyDelete wittyDelteId={wittyDelteId}></V2WittyDelete>
                     <V2WittyModifyModal data={data}></V2WittyModifyModal>
                   </div>
-                  :null
+                  :searchContentKey === 1
+                    ?<Button type="primary" style={{
+                      margin:"0 15px",
+                      borderColor: "#6AAFE6",
+                      background: "#6AAFE6",
+                      borderRadius:"50px",
+                      display:"flex",
+                      float:"right",
+                      marginLeft:"auto",
+                      marginRight:"20px",
+                      display:buttonStatus,
+                    }} onClick={()=>{
+                      setFollow(data.user.id);
+                    }}>{userFollowStatus}</Button>
+                    :null
                 }
                
             </div>

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { List, Avatar,Button,Row,Col, Divider } from 'antd';
+import { List, Avatar,Button,Row,Col, Divider, message } from 'antd';
 import { useEffect} from "react";
-import { followers, following } from '../../apis/users';
+import { followers, following, followerDelete } from '../../apis/users';
 
 function V2FollowerFollowing(props) {
   const[flagfollow,setFlagFollow] = useState(true);
 
   const [userFollowers, setUserFollowers] = useState([]);
-  const [userFollowing, setUserFollowing] = useState([])
+  const [userFollowing, setUserFollowing] = useState([]);
+  const [render,setRender] = useState(false);
 
   useEffect(()=>{
     fechedFollowers(props.user.user_id);
     fechedFollowing(props.user.user_id);
-  },[])
+  },[render])
   
   const fechedFollowers = async (userId) => {
     try{
@@ -38,6 +39,20 @@ function V2FollowerFollowing(props) {
       alert(result);
     }
   }
+  const deleteFollower = async (toUserId)=>{
+    console.log(toUserId);
+    try{
+      const result =  await followerDelete(toUserId);
+      message.success("팔로우 해제 완료");
+      setRender(!render);
+    }catch ({
+      response: {
+        data: { result },
+      },
+    }) {
+      alert(result);
+    }
+  }
 
   return (
     <div>
@@ -54,15 +69,17 @@ function V2FollowerFollowing(props) {
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={item.profileImgUrl} />}
+              avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
-              <Button style={{position:"absolute", right: "0px", top:"0px"}}>
                 {
-                item.followState === 1
-                ?"팔로우"
-                :"팔로우취소"
+                  props.user.user_id === item.id
+                  ?null
+                  :item.followState === 1
+                    ?<Button style={{position:"absolute", right: "0px", top:"0px"}} onClick={
+                      ()=>{deleteFollower(item.id)}}>팔로우취소</Button>
+                    :<Button style={{position:"absolute", right: "0px", top:"0px"}}>팔로우</Button>
                 }
-                </Button></div>}
+                </div>}
               description={item.department}
             />
           </List.Item>
@@ -75,15 +92,15 @@ function V2FollowerFollowing(props) {
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={item.profileImgUrl} />}
+              avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
-              <Button style={{position:"absolute", right: "0px", top:"0px"}}>
-                {
-                item.followState === 1
-                ?"팔로우취소"
-                :"팔로우"
-                }
-                </Button></div>}
+              {
+                  props.user.user_id === item.id
+                  ?null
+                  :<Button style={{position:"absolute", right: "0px", top:"0px"}} onClick={
+                  ()=>{deleteFollower(item.id)}}>팔로우취소</Button>
+              }
+              </div>}
               description={item.department}
             />
           </List.Item>

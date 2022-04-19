@@ -15,4 +15,15 @@
     display: inline-block;
     width: auto;
 }
-
+.ant-layout-header{
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #AAAAAA;
+}/*프로필 상단 profile 글자 부분*/
+.ant-layout-content{
+    
+    padding-bottom: 15px;
+    border-bottom: 5px solid white;
+}
+.ant-layout-footer{
+    padding: 24px 0px;
+}

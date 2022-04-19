@@ -93,3 +93,8 @@
 #container4 .btn:hover{
     background-color: #aaa;
 }
+.ant-layout-header{
+    background-color: #ffffff;
+    opacity: 0.5;
+
+}

@@ -123,3 +123,17 @@ export const followersNum = (profileId) => http.get("/users/follower/count/"+pro
  */
  export const followingNum = (profileId) => http.get("/users/following/count/"+profileId);
 
+ /**
+ * 팔로워 삭제 
+ * @returns {Promise}
+ * @param {string} toUserId
+ */
+export const followerDelete = (toUserId) => http.delete("/users/follow",{toUserId});
+
+/**
+ * 팔로워 신청
+ * @returns {Promise}
+ * @param {string} toUserId
+ */
+ export const follow = (toUserId) => http.post("/users/follow",{toUserId});
+

@@ -1,6 +1,7 @@
 import "./style.css";
 import {useEffect, useState} from "react";
 import { auth } from "../../apis/users";
+
 import { useNavigate } from 'react-router-dom';
 import V2WittyNotification from "../../V2Components/V2WittyNotification/V2WittyNotification";
 import V2WittyProfile from "../../V2Components/V2WittyProfile/V2WittyProfile";
@@ -8,9 +9,10 @@ import V2WittyAddContents from "../../V2Components/V2WittyAddContents/V2WittyAdd
 import V2WittyMenuBar from "../../V2Components/V2WittyMenuBar/V2WittyMenuBar"
 import V2SearchBar from "../../V2Components/V2WittySearchBar/V2SearchBar";
 import V2FollowerFollowing from "../../V2Components/V2FollwersFollowing/V2FollowerFollowing";
-
+import V2WittyAddSearchContents from "../../V2Components/V2WittyAddSearchContents/V2WittyAddSearchContents";
 
 function V2WittyPage(){
+  const [userSearch,setUserSearch] = useState("");
   
   const navigate = useNavigate();
   const contentKey = 1;//로딩시 페이지 설정
@@ -53,8 +55,7 @@ function V2WittyPage(){
   useEffect(()=>{
     console.log(selectMenu);
     setContentBox(initContent(selectMenu));
-    
-  },[selectMenu]);
+  },[selectMenu],[userSearch]);
 
   const initContent = (num)=>{
     if(num===1){
@@ -66,9 +67,14 @@ function V2WittyPage(){
     }else if(num===4){
       return <V2WittyNotification/>//공지사항
     }else{
-      return <></>
+      return <V2WittyAddSearchContents user={user} contentKey={contentKey} userSearch={userSearch}/>//태그 조회
     }
     
+  }
+
+  const searching = (num)=>{
+    setUserSearch(num);
+    setSelectMenu(5);
   }
 
   
@@ -78,7 +84,7 @@ function V2WittyPage(){
   return(
     <div id="V2Main-Layout" >
       <div id="V2Main-Container">
-        <V2SearchBar/>
+        <V2SearchBar searching={searching}/>
         <V2WittyMenuBar getMenuNum={getMenuNum}/>
         <div id="V2Witty-Container">
           {contentBox}    

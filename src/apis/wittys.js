@@ -43,7 +43,7 @@ import axios from "axios";
  * 위티 컨텐츠 태그 조회
  * @returns {Promise}
  */
- export const wittysContentTag = (page,tag) => http.get("/wittys/byTag?page="+parseInt(page)+"&size=3&tag="+tag);
+ export const wittysSearchContent = (page,tag) => http.get("/wittys/byTag?page="+parseInt(page)+"&size=3&tag="+tag);
 
  /** 
  * 위티 컨텐츠 삭제
