@@ -107,19 +107,19 @@ function V2WittyAddContents(props){
 
   if(props.contentKey===1){
     return(
-      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto",padding:"24px 0px"}}>
+      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto",paddingTop:"24px",paddingBottom:"65px"}}>
         <div>
           {content}
         </div>
         {observerBreak === false?setObserver():null}
-        <div style={{position:"absolute",left:"48%"}}>
+        <div style={{position:"absolute",left:"47%"}}>
           {loading?<V2WittyLoading/>:null}
         </div>
       </div>    
     )
   }else{
     return(
-      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto"}}>
+      <div style={{width:"100%", maxWidth:"512px",margin:"0 auto",paddingBottom:"65px"}}>
         <div>
           {myContent}
         </div>
