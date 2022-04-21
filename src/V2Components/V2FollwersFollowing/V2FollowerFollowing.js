@@ -69,7 +69,7 @@ function V2FollowerFollowing(props) {
         renderItem={item => (
           <List.Item style={{padding: "0 20px"}}>
             <List.Item.Meta
-              avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+item.profileImgUrl} />}
+              avatar={<Avatar src={process.env.PUBLIC_URL + '/v2/users/image/'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
                 {
                   props.user.user_id === item.id
@@ -92,7 +92,7 @@ function V2FollowerFollowing(props) {
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+item.profileImgUrl} />}
+              avatar={<Avatar src={process.env.PUBLIC_URL + '/v2/users/image/'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
               {
                   props.user.user_id === item.id

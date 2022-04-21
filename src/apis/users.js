@@ -128,7 +128,11 @@ export const followersNum = (profileId) => http.get("/users/follower/count/"+pro
  * @returns {Promise}
  * @param {string} toUserId
  */
-export const followerDelete = (toUserId) => http.delete("/users/follow",{toUserId});
+export const followerDelete = (toUserId) => http.delete("/users/follow",{
+    data: {
+        toUserId: toUserId
+    }
+});
 
 /**
  * 팔로워 신청

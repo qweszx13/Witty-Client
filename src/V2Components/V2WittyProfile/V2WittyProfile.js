@@ -54,7 +54,7 @@ function V2WittyProfile(props){
         <Content>
         <div id={styles.container2}>
                 <div id={styles.profileBox}>
-                    <img className={styles.profileImg} src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+imgUrl} alt="어라..이미지가.."></img>
+                    <img className={styles.profileImg} src={process.env.PUBLIC_URL + '/v2/users/image/'+imgUrl} alt="어라..이미지가.."></img>
                 </div>
                 <div className={styles.name}>{props.user.user_id}</div>
                 <div className={styles.major}>{props.user.user_department}</div>

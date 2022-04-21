@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Result } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { MehOutlined } from '@ant-design/icons';
+import {auth} from "../../apis/users";
 
 
 
@@ -15,8 +16,7 @@ function V2WittyAddContents(props){
   const myWitty = props.user.user_id;
   const [target,setTarget] = useState("");
   const [observerBreak,setobserverBreak] = useState(false);
-  
-  
+
   useEffect(()=>{
     showContent(page);
     return () => setLoading(false);

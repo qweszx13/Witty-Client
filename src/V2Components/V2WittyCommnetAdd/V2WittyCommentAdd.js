@@ -1,6 +1,6 @@
 import {commentDelete,commentLike,commentUnlike} from "../../apis/comment"
 import React, { createElement, useEffect, useState } from 'react';
-import { Comment, Tooltip, Avatar, message } from 'antd';
+import {Comment, Tooltip, Avatar, message, Image} from 'antd';
 import Moment from 'react-moment';
 import V2WittyCommentModify from "../V2WittyCommentModify/V2WittyCommentModify";
 import 'moment-timezone';
@@ -74,9 +74,6 @@ function V2WittyCommnetAdd({data}){
     }
   }
 
-  
-
- 
   const [likeYN, setlikeYN] = useState(likeSta()); // 좋아요 여부 (좋아요 버튼 바뀜)
   const [userCommentLike,setUserCommentLike] = useState(data.likes);
 
@@ -116,7 +113,7 @@ function V2WittyCommnetAdd({data}){
       <Comment
       actions={actions}
       author={<a style={{fontSize:"1rem", fontWeight:"bold"}}>{data.user.id} <span style={{fontSize:"0.25rem"}}>{data.user.department}</span></a>}
-      avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+imgUrl} alt="Han Solo" />}
+      avatar={<Image src={process.env.PUBLIC_URL + '/v2/users/image/'+imgUrl} alt="Han Solo" />}
       content={
         <p style={{fontSize:"0.8rem"}}>
           {data.content}

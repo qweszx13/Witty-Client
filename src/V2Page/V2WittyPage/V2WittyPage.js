@@ -77,10 +77,6 @@ function V2WittyPage(){
     setSelectMenu(5);
   }
 
-  
-
-  
-
   return(
     <div id="V2Main-Layout" >
       <div id="V2Main-Container">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Comment, Avatar, Form, Input, Badge, Image, Drawer, Button, message } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import {like,unlike} from "../../apis/users";
+import {auth, like, unlike} from "../../apis/users";
 import {comments} from "../../apis/comment";
 import { LikeTwoTone, MessageTwoTone } from '@ant-design/icons';
 import { commentLength } from "../../apis/comment";
@@ -32,11 +32,10 @@ function WittyComponent({data,myWitty,searchContent}) {
   const userThumbNail = data.thumnailImgUri;
   const newData = data
   const [commentSwitch,setCommentSwitch] = useState(false);
-
-
   const[commentVisible, setCommentVisible] = useState(false);
   const[commentInput, setCommentInput] = useState('');
   const[loading, setLoading] = useState(false);
+  const [user,setUser] = useState(null);
 
   // 댓글 보이게 해주는 함수
   const showDrawer = () => {
@@ -160,7 +159,7 @@ function WittyComponent({data,myWitty,searchContent}) {
           {/* 헤더 */}
           <WittyHeaderComponent data={data} myWitty={myWitty} searchContentKey={searchContentKey} />
           {/* 썸네일 */}
-          <Image width={"100%"} src={process.env.PUBLIC_URL + '/V2Thumbnail/V2Thumbnail'+userThumbNail} style={{marginBottom:"10px"}}/>
+          <Image width={"100%"} src={process.env.PUBLIC_URL + '/v2/wittys/image/'+userThumbNail} style={{marginBottom:"10px"}}/>
           {/* 내용 */}
           <div style={{padding: "10px", marginBottom:"16px"}}>
               {data.content}
@@ -191,7 +190,7 @@ function WittyComponent({data,myWitty,searchContent}) {
           {/*댓글창*/}
           <Drawer height={650}  title="댓글입니더" placement="bottom" onClose={onClose} visible={commentVisible} style={{display:"flex", justifyContent:"center"}}>
             <Comment
-                avatar={<Avatar src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+userProfileImg} alt="Han Solo" />}
+                avatar={<Image src={process.env.PUBLIC_URL + '/v2/users/image/'+userProfileImg} alt="Han Solo" />}
                 content={
                     <Editor
                         onChange={onChange}

@@ -52,7 +52,7 @@ function WittyHeaderComponent({data,myWitty,searchContentKey}) {
   return (
     <div style={{display: "flex", marginTop:"10px",marginLeft:"10px",marginBottom: "10px",width:"100%"}}>
         <div size={64} style={{marginRight: "12px"}}>
-           <img className="profileImg" src={process.env.PUBLIC_URL + '/V2UserImg/V2UserImg'+userProfileImg}></img> 
+           <img className="profileImg" src={process.env.PUBLIC_URL + '/v2/users/image/'+userProfileImg}></img>
         </div>
         <div style={{width:"100%"}}>
             <div className='user-profile' style={{display: "flex",width:"100%"}}>
