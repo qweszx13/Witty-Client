@@ -5,6 +5,7 @@ import { wittysModify } from "../../apis/wittys";
 
 
 function V2WittyModifyModal({data}){
+
   const { TextArea } = Input;
   const userWitty = useRef();
   const userTag = useRef();
@@ -13,17 +14,18 @@ function V2WittyModifyModal({data}){
     placeHolderTag.push("#"+i.name+" ");
   })
 
-  const wittyModify = async()=>{
+  const wittySend = async()=>{
     let tag = userTag.current.resizableTextArea.props.value.replace(/ /gi,'');//공백제거 정규식
     tag = tag.split("#"); //#에따른 배열 분할
     tag.shift(); //#앞 공백 혹은 잘못입력된값 삭제 
-    
-
     const witty = userWitty.current.resizableTextArea.props.value;
-
     try{
-      const result = await wittysModify(data.id,witty,tag)
-      
+      const formData = new FormData();
+      formData.append("thumbnailImgUri",files.length && files[0].uploadedFile);
+      formData.append("content",witty);
+      formData.append("tags",tag);
+      const result = await wittysModify(data.id,formData);
+      alert("위티수정완료");
     }catch ({
       response:{ 
         data:{ result }
@@ -33,6 +35,9 @@ function V2WittyModifyModal({data}){
     }
   };
 
+  
+
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
@@ -41,13 +46,21 @@ function V2WittyModifyModal({data}){
   
 
   const handleOk = () => {
-    wittyModify();
+    wittySend();
     setIsModalVisible(false);
     message.success('수정완료');
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const [files,setFiles] = useState([]);
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    setFiles([...files, { uploadedFile: file }]);
   };
 
   return (
@@ -66,6 +79,12 @@ function V2WittyModifyModal({data}){
         placeholder={placeHolderTag}
         ref={userTag}
         />
+         <Input
+        type="file"
+        encType="multipart/form-data"
+        accept="image/png, image/gif, image/jpeg"
+        onChange={handleUpload}
+        ></Input>
       </Modal>
     </>
   );

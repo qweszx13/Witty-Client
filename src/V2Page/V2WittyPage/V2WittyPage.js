@@ -13,6 +13,7 @@ import V2WittyAddSearchContents from "../../V2Components/V2WittyAddSearchContent
 
 function V2WittyPage(){
   const [userSearch,setUserSearch] = useState("");
+  const [profileFlag,setProfileFlag] = useState(false);
   
   const navigate = useNavigate();
   const contentKey = 1;//로딩시 페이지 설정
@@ -49,8 +50,9 @@ function V2WittyPage(){
   
   useEffect(()=>{
     fetchUser();
+    console.log(user);
     setContentBox(initContent(1));//페이지 기본값 
-  },[]);
+  },[profileFlag]);
 
   useEffect(()=>{
     console.log(selectMenu);
@@ -61,7 +63,7 @@ function V2WittyPage(){
     if(num===1){
       return <V2WittyAddContents user={user} contentKey={contentKey}/>//전체 위티 조회
     }else if(num===2){
-      return <V2WittyProfile user={user}/>//프로필 및 유저 작성 위티 부분
+      return <V2WittyProfile user={user} profileFlag={profileFlag} setProfileFlag={setProfileFlag}/>//프로필 및 유저 작성 위티 부분
     }else if(num===3){
       return <V2FollowerFollowing user={user}/>
     }else if(num===4){

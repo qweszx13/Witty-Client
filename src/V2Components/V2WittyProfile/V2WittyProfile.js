@@ -11,6 +11,8 @@ import {Layout} from 'antd';
 const { Header, Footer, Content } = Layout;
 
 function V2WittyProfile(props){
+    const profileFlag = props.profileFlag;
+    const setProfileFlag = props.setProfileFlag;
     const userId = props.user.user_id;
     const user = props.user;
     const contentKey = 2;   
@@ -78,6 +80,8 @@ function V2WittyProfile(props){
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
             userId={userId}
+            profileFlag = {profileFlag}
+            setProfileFlag ={setProfileFlag}
             />
         </Footer>
       </Layout>

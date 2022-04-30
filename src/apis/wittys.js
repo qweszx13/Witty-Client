@@ -28,10 +28,14 @@ import axios from "axios";
  * @param {Array<String>} tags 태그 정보
  * @returns {Promise}
  */
- export const wittysModify = (wittyId,content,tags) => http.patch("/wittys/"+parseInt(wittyId),{
-   content,
-   tags,
- });
+ export const wittysModify = (wittyId,wittyInfo) => axios({
+  method: "patch",
+  url: "http://localhost:8080/v2/wittys/"+parseInt(wittyId),
+  data: wittyInfo,
+  withCredentials: true,
+  headers: { "Content-Type": "multipart/form-data"}
+});
+ 
 
 /** 
  * 위티 컨텐츠 조회

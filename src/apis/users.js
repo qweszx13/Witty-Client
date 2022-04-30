@@ -27,6 +27,7 @@ export const signup = (userInfo) => axios({
   method: "post",
   url: "http://localhost:8080/v2/users",
   data: userInfo,
+  withCredentials: true,
   headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem("access_token") }
 });
 
@@ -39,7 +40,8 @@ export const signup = (userInfo) => axios({
   method: "patch",
   url: "http://localhost:8080/v2/users/"+userId,
   data: userInfo,
-  headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem("access_token") }
+  withCredentials: true,
+  headers: { "Content-Type": "multipart/form-data" }
 });
 
 /**

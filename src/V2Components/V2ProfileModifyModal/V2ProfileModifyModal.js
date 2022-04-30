@@ -49,7 +49,7 @@ const majarOptions = [
   { value: "컴퓨터 정보학부" },
 ];
 
-function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId }) {
+function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId,profileFlag,setProfileFlag }) {
   const [form] = Form.useForm();
   const handleOk = () => {
     form.submit();
@@ -79,6 +79,7 @@ function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId }) {
         formData.append("introduction",introduction);
         const result = await userInfoModi(formData,userId);
         setIsModalVisible(false);
+        setProfileFlag(!profileFlag);
         ModifyCompleteNotification();
       } catch ({ message }) {
         alert(message);
