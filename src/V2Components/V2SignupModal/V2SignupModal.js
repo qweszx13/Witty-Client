@@ -80,35 +80,19 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
     console.log(password);
     console.log(files[0].uploadedFile);
     console.log(introduction);
-    if(propsUserId!==undefined){
-      try {
-        const formData = new FormData();
-        formData.append("user_department",user_department);
-        formData.append("password",password);
-        formData.append("user_email",user_email);
-        formData.append("profileImgUrl",files.length && files[0].uploadedFile);
-        formData.append("introduction",introduction);
-        const result = await userInfoModi(formData,propsUserId);
-        setIsModalVisible(false);
-        alert('수정이 완료되었습니다')
-      } catch ({ message }) {
-        alert(message);
-      }
-    }else{
-      try {
-        const formData = new FormData();
-        formData.append("user_id",user_id);
-        formData.append("user_email",user_email);
-        formData.append("user_department",user_department);
-        formData.append("password",password);
-        formData.append("profileImgUrl",files.length && files[0].uploadedFile);
-        formData.append("introduction",introduction);
-        const result = await signup(formData);
-        setIsModalVisible(false);
-        SignupCompleteNotification(result.user_id);
-      } catch ({ message }) {
-        alert(message);
-      }
+    try {
+      const formData = new FormData();
+      formData.append("user_id",user_id);
+      formData.append("user_email",user_email);
+      formData.append("user_department",user_department);
+      formData.append("password",password);
+      formData.append("profileImgUrl",files.length && files[0].uploadedFile);
+      formData.append("introduction",introduction);
+      const result = await signup(formData);
+      setIsModalVisible(false);
+      SignupCompleteNotification(result.user_id);
+    } catch ({ message }) {
+      alert(message);
     }
   };
 
@@ -181,7 +165,6 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
 
   const userVerification = useRef();
   const [userVerficationCheck,setUserVerificationCheck] = useState(false);
-  
 
   const onVerificationCheck = async () =>{
     try{
@@ -217,14 +200,12 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
     setFiles([...files, { uploadedFile: file }]);
   };
   
-  
-
   return (
     <Modal
-      title={propsUserId!==undefined?"프로필수정":"회원가입"}
+      title={"회원가입"}
       visible={isModalVisible}
       onOk={()=>{handleOk()}}
-      okText={propsUserId!==undefined?setModiOb.bt_input:"회원가입"}
+      okText={"회원가입"}
       onCancel={(()=>{handleCancel()})}
       cancelText="취소"
     >
@@ -235,9 +216,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
         onFinish={onFinish}
         scrollToFirstError
       >
-        {propsUserId!==undefined
-          ?null
-          :<Form.Item
+        <Form.Item
           label="아이디"
           name="user_id"
           tooltip="아이디는 다른 사람에게 보이는 이름 정보입니다."
@@ -258,13 +237,8 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             </Col>
           </Row>
         </Form.Item>
-        }
         
-
-        {
-          propsUserId!==undefined
-          ?null
-          :<Form.Item
+        <Form.Item
           label="이메일"
           name="user_email"
           tooltip="위티는 대림대 전용 커뮤니케이션입니다 @email.daelim.ac.kr 로 가입해주세요"
@@ -295,42 +269,41 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             </Col>
           </Row>
         </Form.Item>
-        }
-        
             
         {()=>{
           emailCheckInput === true
           ?setUserVerificationCheck(true)
           :setUserVerificationCheck(false)
         }}
-          <Form.Item label="이메일 인증" style={ {marginBottom:"0px"} } hidden={userVerification}>
-            <Row gutter={8}>
-              <Col span={16}>
-                <Form.Item
-                  name="verification"
-                  rules={[
-                    {
-                      len:6,
-                      message:"인증번호는 6자 입니다!"
-                    },
-                    {
-                    //required:true,
-                    message:"인증번호를 입력해주세요!"
-                    },
-                    {
-                    
-                    }
-                  ]}
-                >
-                  <Input ref={userVerification} id="user_verification"/>
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Button onClick={()=>{onVerificationCheck()}}>인증번호 확인</Button>
-              </Col>
-            </Row>
-          </Form.Item>
-        
+
+        <Form.Item label="이메일 인증" style={ {marginBottom:"0px"} } hidden={userVerification}>
+          <Row gutter={8}>
+            <Col span={16}>
+              <Form.Item
+                name="verification"
+                rules={[
+                  {
+                    len:6,
+                    message:"인증번호는 6자 입니다!"
+                  },
+                  {
+                  //required:true,
+                  message:"인증번호를 입력해주세요!"
+                  },
+                  {
+                  
+                  }
+                ]}
+              >
+                <Input ref={userVerification} id="user_verification"/>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Button onClick={()=>{onVerificationCheck()}}>인증번호 확인</Button>
+            </Col>
+          </Row>
+        </Form.Item>
+      
         <Form.Item
           name="password"
           label="비밀번호"
@@ -367,9 +340,9 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
               },
             }),
           ]}
-        >
-          <Input.Password />
-        </Form.Item>
+         >
+            <Input.Password />
+          </Form.Item>
 
         <Form.Item
           name="introduction"
@@ -377,6 +350,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
         >
           <Input name="introduction"/>
         </Form.Item>
+        
         <Form.Item
           label="프로필 이미지"
           name="profileImgUrl"
@@ -407,9 +381,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
           />
         </Form.Item>
         
-        {propsUserId!==undefined
-          ?null
-          :<Form.Item
+        <Form.Item
           name="agreement"
           valuePropName="checked"
           rules={[
@@ -428,7 +400,7 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             <a href="">개인정보 처리방침</a>에 동의합니다
           </Checkbox>
         </Form.Item>
-        }  
+        
       </Form>
     </Modal>
   );

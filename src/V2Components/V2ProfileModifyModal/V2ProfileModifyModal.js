@@ -9,7 +9,8 @@ import {
   Button,
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import { sendEmail, verification,userInfoModi } from "../../apis/users";
+import { useNavigate } from 'react-router-dom';
+import { sendEmail, verification,userInfoModi,logout } from "../../apis/users";
 import { useRef,useState } from "react";
 
 const formItemLayout = {
@@ -49,8 +50,26 @@ const majarOptions = [
   { value: "컴퓨터 정보학부" },
 ];
 
-function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId,profileFlag,setProfileFlag }) {
+function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId}) {
   const [form] = Form.useForm();
+  
+  const navigate = useNavigate();
+
+  const userLogout = async ()=>{
+
+    try{
+      const result = await logout(); 
+        navigate('/');
+    }catch({
+      response:{ 
+        data:{ result }
+      },
+    }) {
+      alert(result);
+    }
+  }
+  
+
   const handleOk = () => {
     form.submit();
   };
@@ -79,7 +98,7 @@ function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId,profile
         formData.append("introduction",introduction);
         const result = await userInfoModi(formData,userId);
         setIsModalVisible(false);
-        setProfileFlag(!profileFlag);
+        userLogout();
         ModifyCompleteNotification();
       } catch ({ message }) {
         alert(message);
@@ -88,88 +107,11 @@ function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId,profile
 
   const ModifyCompleteNotification = (user_id) => {
     notification.open({
-      message: "수정 성공!",
-      description: `프로필을 새롭게 수정했어요!`,
+      message: "프로필 수정 성공!",
+      description: `다시 로그린하고 위티를 시작해봐요!`,
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
   };
-  
-  const [myTimer,setMyTimer] = useState(300000);
-  const email = useRef();
-  const [emailCheckInput,setEmailCheckInput] = useState(false);
-  const [myLoading,setMyLoading] = useState(false);//로딩
-  const regExp = /.+@email\.daelim\.ac\.kr/;//규정
-
-  const onEmailCheck = async () => {
-    setMyLoading(true);
-    try{
-      if(regExp.test(email.current.input.defaultValue)){
-        const result = await sendEmail(email.current.input.defaultValue);
-        alert("이메일로 인증번호가 전송되었습니다.");
-        setEmailCheckInput(true);
-        setMyLoading(false);
-        function disabled(){
-          const input = document.getElementById("user_email");
-          input.setAttribute("readonly","readonly")
-        }
-        disabled();
-        setTimeout(() => {
-        setEmailCheckInput(false)
-        alert("입력시간이 초과되었습니다!")
-      }, myTimer);//3분
-      }else{
-        alert("이메일은 대림대학교 이메일로 인증해주세요!");
-        setMyLoading(false);
-      }
-    }catch({
-      response: {
-        data: { result }
-      },
-    }){
-      if(result === "이미 가입된 이메일 입니다."){
-        setEmailCheckInput(false);
-        setMyLoading(false);
-        alert(result);
-      }else{
-        setEmailCheckInput(false);
-        setMyLoading(false);
-        alert("이메일 인증이 잘못되었습니다.");
-      }
-    }
-  };
-
-  
-
-  const userVerification = useRef();
-  const [userVerficationCheck,setUserVerificationCheck] = useState(false);
-  
-  
-
-  const onVerificationCheck = async () =>{
-    try{
-      const result = await verification(email.current.input.defaultValue,userVerification.current.input.defaultValue);
-      if(result.data.result === "인증번호를 확인 해 주세요"){
-        alert(result);
-      }else{
-        console.log(result);
-        alert("인증번호가 일치합니다!");
-        function disabled(){
-          const input = document.getElementById("user_verification");
-          input.setAttribute("readonly","readonly")
-        }
-        disabled();
-        setMyTimer(300000000);
-      }
-      
-      }catch({
-        response:{ 
-          data:{ result }
-      },
-    }) {
-      alert(result);
-    }
-
-  }
 
   const [files,setFiles] = useState([]);
 
@@ -197,37 +139,6 @@ function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId,profile
         onFinish={onFinish}
         scrollToFirstError
       >      
-        {()=>{
-          emailCheckInput === true
-          ?setUserVerificationCheck(true)
-          :setUserVerificationCheck(false)
-        }}
-
-        <Form.Item label="이메일 인증" style={ {marginBottom:"0px"} } hidden={userVerification}>
-          <Row gutter={8}>
-            <Col span={16}>
-              <Form.Item
-                name="verification"
-                rules={[
-                  {
-                    len:6,
-                    message:"인증번호는 6자 입니다!"
-                  },
-                  {
-                  //required:true,
-                  message:"인증번호를 입력해주세요!"
-                  },
-                ]}
-              >
-                <Input ref={userVerification} id="user_verification"/>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Button onClick={()=>{onVerificationCheck()}}>인증번호 확인</Button>
-            </Col>
-          </Row>
-        </Form.Item>
-        
         <Form.Item
           name="password"
           label="비밀번호"
