@@ -4,8 +4,8 @@ import V2WittyCreateModal from "../V2WittyCreateModal/V2WittyCreateModal";
 import {followingNum} from "../../apis/users";
 import {followersNum} from "../../apis/users";
 import { useEffect, useState } from "react";
-import SignupModal from "../V2SignupModal/V2SignupModal";
-import {Divider, Layout} from 'antd';
+import V2ProfileModifyModal from "../V2ProfileModifyModal/V2ProfileModifyModal";
+import {Layout} from 'antd';
 
 
 const { Header, Footer, Content } = Layout;
@@ -18,6 +18,7 @@ function V2WittyProfile(props){
 
     const [fwerNum,setFwerNum] = useState(0);
     const [fwingNum,setFwingNum] = useState(0);
+    const [wittySuccesFlag,setWittySuccesFlag] = useState(false);
 
     const fNum = async () => {
         try{
@@ -62,18 +63,18 @@ function V2WittyProfile(props){
             </div>
             <div id={styles.container3}>
                 <div className={styles.follow}>팔로잉</div>
-                <div className={styles.follow}>팔로워</div>
+                <div className={styles.follow}>팔로우</div>
                 <div className={styles.number1}>{fwingNum}</div>
                 <div className={styles.number2}>{fwerNum}</div>
             </div>
             <div id={styles.container4}>
-                <V2WittyCreateModal></V2WittyCreateModal>
+                <V2WittyCreateModal setWittySuccesFlag={setWittySuccesFlag} wittySuccesFlag={wittySuccesFlag}></V2WittyCreateModal>
                 <button className={styles.btn} onClick={showModal}>프로필 편집</button>
             </div>
         </Content>
         <Footer>
-            <V2WittyAddContents user={user} contentKey={contentKey}/>
-            <SignupModal
+            <V2WittyAddContents user={user} contentKey={contentKey} wittySuccesFlag={wittySuccesFlag} setWittySuccesFlag={setWittySuccesFlag}/>
+            <V2ProfileModifyModal
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
             userId={userId}

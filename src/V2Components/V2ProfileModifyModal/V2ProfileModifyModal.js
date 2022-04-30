@@ -2,7 +2,6 @@ import Modal from "antd/lib/modal/Modal";
 import {
   Form,
   Input,
-  Checkbox,
   AutoComplete,
   notification,
   Row,
@@ -10,7 +9,7 @@ import {
   Button,
 } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import { signup, sendEmail, idCheck, verification,userInfoModi } from "../../apis/users";
+import { sendEmail, verification,userInfoModi } from "../../apis/users";
 import { useRef,useState } from "react";
 
 const formItemLayout = {
@@ -50,13 +49,7 @@ const majarOptions = [
   { value: "컴퓨터 정보학부" },
 ];
 
-function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
-  const propsUserId = userId;
-  const setModiOb = {
-    title:"회원수정",
-    bt_input:"수정하기"
-  }
-
+function V2ProfileModifyModal({ isModalVisible, setIsModalVisible,userId }) {
   const [form] = Form.useForm();
   const handleOk = () => {
     form.submit();
@@ -67,55 +60,35 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
   };
 
   const onFinish = async ({
-    user_id,
     user_email,
     user_department,
     password,
     profileImgUrl,
     introduction
   }) => {
-    console.log(user_id);
     console.log(user_email);
     console.log(user_department);
     console.log(password);
     console.log(files[0].uploadedFile);
     console.log(introduction);
-    if(propsUserId!==undefined){
       try {
         const formData = new FormData();
         formData.append("user_department",user_department);
         formData.append("password",password);
-        formData.append("user_email",user_email);
         formData.append("profileImgUrl",files.length && files[0].uploadedFile);
         formData.append("introduction",introduction);
-        const result = await userInfoModi(formData,propsUserId);
+        const result = await userInfoModi(formData,userId);
         setIsModalVisible(false);
-        alert('수정이 완료되었습니다')
+        ModifyCompleteNotification();
       } catch ({ message }) {
         alert(message);
       }
-    }else{
-      try {
-        const formData = new FormData();
-        formData.append("user_id",user_id);
-        formData.append("user_email",user_email);
-        formData.append("user_department",user_department);
-        formData.append("password",password);
-        formData.append("profileImgUrl",files.length && files[0].uploadedFile);
-        formData.append("introduction",introduction);
-        const result = await signup(formData);
-        setIsModalVisible(false);
-        SignupCompleteNotification(result.user_id);
-      } catch ({ message }) {
-        alert(message);
-      }
-    }
-  };
+    };
 
-  const SignupCompleteNotification = (user_id) => {
+  const ModifyCompleteNotification = (user_id) => {
     notification.open({
-      message: "회원가입 성공 !",
-      description: `회원가입이 성공적으로 이루어졌습니다! ${user_id}님의 Witty 회원이 되신 것을 환영합니다!`,
+      message: "수정 성공!",
+      description: `프로필을 새롭게 수정했어요!`,
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
   };
@@ -164,23 +137,11 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
     }
   };
 
-  const id = useRef();
-
-  const onIdCheck = async () => {
-    try {
-      const result = await idCheck(id.current.input.defaultValue);
-      alert("사용가능한 아이디 입니다.");
-    } catch ({
-      response: {
-        data: { result },
-      },
-    }) {
-      alert(result);
-    }
-  };
+  
 
   const userVerification = useRef();
   const [userVerficationCheck,setUserVerificationCheck] = useState(false);
+  
   
 
   const onVerificationCheck = async () =>{
@@ -221,10 +182,10 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
 
   return (
     <Modal
-      title={propsUserId!==undefined?"프로필수정":"회원가입"}
+      title={"프로필수정"}
       visible={isModalVisible}
       onOk={()=>{handleOk()}}
-      okText={propsUserId!==undefined?setModiOb.bt_input:"회원가입"}
+      okText={"수정완료"}
       onCancel={(()=>{handleCancel()})}
       cancelText="취소"
     >
@@ -234,102 +195,37 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
         name="register"
         onFinish={onFinish}
         scrollToFirstError
-      >
-        {propsUserId!==undefined
-          ?null
-          :<Form.Item
-          label="아이디"
-          name="user_id"
-          tooltip="아이디는 다른 사람에게 보이는 이름 정보입니다."
-          rules={[
-            {
-              required: true,
-              message: "아이디를 입력해주세요!",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Row gutter={8}>
-            <Col span={14}>
-              <Input ref={id} name="user_id" />
-            </Col>
-            <Col span={8}>
-              <Button onClick={()=>{onIdCheck()}}>아이디 중복 확인</Button>
-            </Col>
-          </Row>
-        </Form.Item>
-        }
-        
-
-        {
-          propsUserId!==undefined
-          ?null
-          :<Form.Item
-          label="이메일"
-          name="user_email"
-          tooltip="위티는 대림대 전용 커뮤니케이션입니다 @email.daelim.ac.kr 로 가입해주세요"
-          rules={[
-            {
-              type: "email",
-              message: "유효하지 않은 이메일 입니다!",
-            },
-            {
-              //required: true,
-              message: "이메일을 입력해주세요!",
-            },
-            {
-              pattern:".+@email\.daelim\.ac\.kr",
-              message:"email.daelim.ac.kr로 가입해주세요",
-            },
-          ]}
-        >
-          <Row gutter={8}>
-            <Col span={14}>
-              <Input ref={email} name="user_email" />
-            </Col>  
-            <Col span={8}>
-              <Button 
-              onClick={()=>{onEmailCheck()}}
-              loading={myLoading}
-              >이메일 인증</Button>
-            </Col>
-          </Row>
-        </Form.Item>
-        }
-        
-            
+      >      
         {()=>{
           emailCheckInput === true
           ?setUserVerificationCheck(true)
           :setUserVerificationCheck(false)
         }}
-          <Form.Item label="이메일 인증" style={ {marginBottom:"0px"} } hidden={userVerification}>
-            <Row gutter={8}>
-              <Col span={16}>
-                <Form.Item
-                  name="verification"
-                  rules={[
-                    {
-                      len:6,
-                      message:"인증번호는 6자 입니다!"
-                    },
-                    {
-                    //required:true,
-                    message:"인증번호를 입력해주세요!"
-                    },
-                    {
-                    
-                    }
-                  ]}
-                >
-                  <Input ref={userVerification} id="user_verification"/>
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Button onClick={()=>{onVerificationCheck()}}>인증번호 확인</Button>
-              </Col>
-            </Row>
-          </Form.Item>
+
+        <Form.Item label="이메일 인증" style={ {marginBottom:"0px"} } hidden={userVerification}>
+          <Row gutter={8}>
+            <Col span={16}>
+              <Form.Item
+                name="verification"
+                rules={[
+                  {
+                    len:6,
+                    message:"인증번호는 6자 입니다!"
+                  },
+                  {
+                  //required:true,
+                  message:"인증번호를 입력해주세요!"
+                  },
+                ]}
+              >
+                <Input ref={userVerification} id="user_verification"/>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Button onClick={()=>{onVerificationCheck()}}>인증번호 확인</Button>
+            </Col>
+          </Row>
+        </Form.Item>
         
         <Form.Item
           name="password"
@@ -406,32 +302,10 @@ function SignupModal({ isModalVisible, setIsModalVisible,userId }) {
             }
           />
         </Form.Item>
-        
-        {propsUserId!==undefined
-          ?null
-          :<Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[
-            {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(
-                      new Error("개인정보 처리방침에 동의해주세요!")
-                    ),
-            },
-          ]}
-          {...tailFormItemLayout}
-        >
-          <Checkbox>
-            <a href="">개인정보 처리방침</a>에 동의합니다
-          </Checkbox>
-        </Form.Item>
-        }  
       </Form>
     </Modal>
   );
 }
 
-export default SignupModal;
+
+export default V2ProfileModifyModal;

@@ -10,7 +10,6 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
 
 function WittyHeaderComponent({data,myWitty,searchContentKey}) {
   const [userFollowStatus,setUserFollowStatus] = useState("팔로우");
-  const [buttonStatus,setButtonStatus] = useState("inline-block");
   const userProfileImg = data.user.profileImgUrl;
   const wittyDelteId = data.id;
 
@@ -21,13 +20,13 @@ function WittyHeaderComponent({data,myWitty,searchContentKey}) {
       return <Moment format="방금 전">{startTime}</Moment>;
     }
     if(parseInt(startTime - nowTime) > -3600000){
-      return <Moment format="M 분전">{startTime}</Moment>;
+      return <Moment format="M 분전">{nowTime-startTime}</Moment>;
     }
-    if(parseInt(startTime - nowTime) <= -3600000){
-      return <Moment format="H 시간전">{startTime}</Moment>;
+    if(parseInt(startTime - nowTime) > -86400000){
+      return <Moment format="H 시간전">{nowTime-startTime}</Moment>;
     }
-    if (parseInt(startTime - nowTime) < -86400000) {
-      return <Moment format="MMM D일">{startTime}</Moment>;
+    if (parseInt(startTime - nowTime) <= -86400000) {
+      return <Moment format="D 일전">{nowTime-startTime}</Moment>;
     }
     if (parseInt(startTime - nowTime) > -86400000) {
       return <Moment fromNow>{startTime}</Moment>;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Comment, Avatar, Form, Input, Badge, Image, Drawer, Button, message } from 'antd';
+import { Comment, Form, Input, Badge, Image, Drawer, Button, message } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import {auth, like, unlike} from "../../apis/users";
+import { like, unlike } from "../../apis/users";
 import {comments} from "../../apis/comment";
 import { LikeTwoTone, MessageTwoTone } from '@ant-design/icons';
 import { commentLength } from "../../apis/comment";
@@ -26,7 +26,7 @@ const Editor = ({ onChange, onSubmit, loading, commentInput }) => (
   </>
 );
 
-function WittyComponent({data,myWitty,searchContent}) {
+function WittyComponent({data,myWitty,searchContent,setWittySuccesFlag,wittySuccesFlag}) {
   const searchContentKey = searchContent;
   const userProfileImg = data.user.profileImgUrl;
   const userThumbNail = data.thumnailImgUri;
@@ -35,7 +35,6 @@ function WittyComponent({data,myWitty,searchContent}) {
   const[commentVisible, setCommentVisible] = useState(false);
   const[commentInput, setCommentInput] = useState('');
   const[loading, setLoading] = useState(false);
-  const [user,setUser] = useState(null);
 
   // 댓글 보이게 해주는 함수
   const showDrawer = () => {
@@ -199,7 +198,7 @@ function WittyComponent({data,myWitty,searchContent}) {
                         commentInput={commentInput} />
           }
         />
-            <WittyComment newData={newData} commentSwitch={commentSwitch} setCommentSwitch={setCommentSwitch} />
+            <WittyComment myWitty={myWitty} newData={newData} commentSwitch={commentSwitch} setCommentSwitch={setCommentSwitch} />
           </Drawer>
       </div>
   )

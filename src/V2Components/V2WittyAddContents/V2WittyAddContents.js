@@ -2,26 +2,23 @@ import { wittysContent } from "../../apis/wittys";
 import WittyComponent from "../V2WittyContents/WittyComponent";
 import V2WittyLoading from "../V2WittyLoading/V2WittyLoading";
 import {useEffect, useState} from "react";
-import { v4 as uuidv4 } from 'uuid';
 import { Result } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { MehOutlined } from '@ant-design/icons';
-import {auth} from "../../apis/users";
 
 
 
 function V2WittyAddContents(props){
+
   const [loading,setLoading] = useState(false);
   let page = 0;
-  const myWitty = props.user.user_id;
+  let myWitty = props.user.user_id;
   const [target,setTarget] = useState("");
   const [observerBreak,setobserverBreak] = useState(false);
 
-  useEffect(()=>{
-    showContent(page);
-    return () => setLoading(false);
-  },[])
+  
 
+  
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !loading) {
       observer.unobserve(entry.target);
@@ -54,6 +51,13 @@ function V2WittyAddContents(props){
   const userContent = [];
   const [myContent,setMyContent] = useState([]);//나의 컨텐츠
   const copyMyContent = [];
+
+  useEffect(()=>{
+    showContent(0);
+    page++;
+    return () => setLoading(false);
+  },[])
+
   
   const showContent = async (nowPage) => {
     try{
@@ -87,9 +91,19 @@ function V2WittyAddContents(props){
       setMyContent(copyMyContent,[...myContent])
     }else{
       for(let i=0;i<data.length;i++){ 
-        userContent.push(<WittyComponent data = {data[i]} key={data[i].id}></WittyComponent>)
+        userContent.push(<WittyComponent 
+          data = {data[i]} 
+          key={data[i].id} 
+          myWitty = {myWitty}
+          setWittySuccesFlag={props.setWittySuccesFlag} 
+          wittySuccesFlag={props.wittySuccesFlag}></WittyComponent>)
         if(myWitty===data[i].user.id){
-          copyMyContent.push(<WittyComponent data = {data[i]} myWitty = {myWitty} key={data[i].id}></WittyComponent>)
+          copyMyContent.push(<WittyComponent 
+            data = {data[i]} 
+            myWitty = {myWitty} 
+            key={data[i].id} 
+            setWittySuccesFlag={props.setWittySuccesFlag} 
+            wittySuccesFlag={props.wittySuccesFlag}></WittyComponent>)
         }
       }
       setContent(userContent,[...content])

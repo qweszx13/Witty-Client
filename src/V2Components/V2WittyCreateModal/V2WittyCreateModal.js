@@ -1,11 +1,11 @@
 import styles from "./style.module.css"
 import { useState,useRef } from "react";
 import Modal from "antd/lib/modal/Modal";
-import { Button,Input } from "antd";
+import { Input } from "antd";
 import { wittys } from "../../apis/wittys";
 
 
-const V2WittyCreateModal = () => {
+const V2WittyCreateModal = ({setWittySuccesFlag,wittySuccesFlag}) => {
   const { TextArea } = Input;
   const userWitty = useRef();
   const userTag = useRef();
@@ -21,8 +21,10 @@ const V2WittyCreateModal = () => {
       formData.append("thumbnailImgUri",files.length && files[0].uploadedFile);
       formData.append("content",witty);
       formData.append("tags",tag);
-      const result = await wittys(formData)
+      const result = await wittys(formData);
       alert("위티작성완료");
+      setWittySuccesFlag(!wittySuccesFlag);
+      console.log(wittySuccesFlag);
     }catch ({
       response:{ 
         data:{ result }

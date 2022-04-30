@@ -1,15 +1,16 @@
 import {commentDelete,commentLike,commentUnlike} from "../../apis/comment"
 import React, { createElement, useEffect, useState } from 'react';
-import {Comment, Tooltip, Avatar, message, Image} from 'antd';
+import {Comment, Tooltip , message, Image} from 'antd';
 import Moment from 'react-moment';
 import V2WittyCommentModify from "../V2WittyCommentModify/V2WittyCommentModify";
 import 'moment-timezone';
+import { auth } from "../../apis/users";
 import { LikeOutlined, LikeFilled } from '@ant-design/icons';
 
 
-function V2WittyCommnetAdd({data}){
-  const newData = data;
+function V2WittyCommnetAdd({data,commentSwitch,setCommentSwitch,commentMyWitty}){
   const imgUrl = data.user.profileImgUrl;
+  const myId = commentMyWitty;
   const likeSta = ()=>{
     if(data.likeStatus === 1){
       return true;
@@ -25,13 +26,13 @@ function V2WittyCommnetAdd({data}){
       return <Moment format="방금 전">{startTime}</Moment>;
     }
     if(parseInt(startTime - nowTime) > -3600000){
-      return <Moment format="M 분전">{startTime}</Moment>;
+      return <Moment format="M 분전">{nowTime-startTime}</Moment>;
     }
-    if(parseInt(startTime - nowTime) <= -3600000){
-      return <Moment format="H 시간전">{startTime}</Moment>;
+    if(parseInt(startTime - nowTime) > -86400000){
+      return <Moment format="H 시간전">{nowTime-startTime}</Moment>;
     }
-    if (parseInt(startTime - nowTime) < -86400000) {
-      return <Moment format="MMM D일">{startTime}</Moment>;
+    if (parseInt(startTime - nowTime) <= -86400000) {
+      return <Moment format="D 일전">{nowTime-startTime}</Moment>;
     }
     if (parseInt(startTime - nowTime) > -86400000) {
       return <Moment fromNow>{startTime}</Moment>;
@@ -41,6 +42,7 @@ function V2WittyCommnetAdd({data}){
   async function cmDelete(wittyDelteId){
     try{
       const result = await commentDelete(wittyDelteId);
+      setCommentSwitch(!commentSwitch);
     }catch({
       response:{ 
         data:{ result }
@@ -96,7 +98,10 @@ function V2WittyCommnetAdd({data}){
   const fDelete =()=>{
     cmDelete(data.id);
     message.success("삭제완료");
+    
   }
+  
+
   
   const actions = [
     <Tooltip key="comment-basic-like" title="좋아요">
@@ -105,8 +110,13 @@ function V2WittyCommnetAdd({data}){
         <span className="comment-action" style={{paddingLeft: "3px"}}>{userCommentLike}</span>
       </span>
     </Tooltip>,
-    <span key="comment-basic-reply-to2" onClick={()=>{fDelete()}}>삭제</span>,
-    <span><V2WittyCommentModify newData={newData}></V2WittyCommentModify></span>
+      data.user.id === myId
+      ? 
+      <>
+        <span key="comment-basic-reply-to2" onClick={()=>{fDelete()}}>삭제</span>,
+        <span><V2WittyCommentModify data={data} commentSwitch={commentSwitch} setCommentSwitch={setCommentSwitch}></V2WittyCommentModify></span>
+      </>
+      :console.log(myId)
   ];
 
   return (

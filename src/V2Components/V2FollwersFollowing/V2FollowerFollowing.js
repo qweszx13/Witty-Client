@@ -3,9 +3,9 @@ import { List, Avatar,Button,Row,Col, Divider, message } from 'antd';
 import { useEffect} from "react";
 import { followers, following, followerDelete } from '../../apis/users';
 
+
 function V2FollowerFollowing(props) {
   const[flagfollow,setFlagFollow] = useState(true);
-
   const [userFollowers, setUserFollowers] = useState([]);
   const [userFollowing, setUserFollowing] = useState([]);
   const [render,setRender] = useState(false);
@@ -39,6 +39,7 @@ function V2FollowerFollowing(props) {
       alert(result);
     }
   }
+
   const deleteFollower = async (toUserId)=>{
     console.log(toUserId);
     try{
@@ -69,7 +70,7 @@ function V2FollowerFollowing(props) {
         renderItem={item => (
           <List.Item style={{padding: "0 20px"}}>
             <List.Item.Meta
-              avatar={<Avatar src={process.env.PUBLIC_URL + '/v2/users/image/'+item.profileImgUrl} />}
+              avatar={<img src={process.env.PUBLIC_URL + '/v2/users/image/'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
                 {
                   props.user.user_id === item.id
@@ -92,7 +93,7 @@ function V2FollowerFollowing(props) {
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={process.env.PUBLIC_URL + '/v2/users/image/'+item.profileImgUrl} />}
+              avatar={<img src={process.env.PUBLIC_URL + '/v2/users/image/'+item.profileImgUrl} />}
               title={<div style={{position:"relative"}}><a href="https://ant.design">{item.id}</a>
               {
                   props.user.user_id === item.id

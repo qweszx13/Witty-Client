@@ -4,15 +4,15 @@ import { Input,message } from "antd";
 import { commentModify } from "../../apis/comment";
 
 
-function V2WittyCommentModify({newData}){
+function V2WittyCommentModify({data,commentSwitch,setCommentSwitch}){
   const { TextArea } = Input;
   const userComment = useRef();
 
   const newCommentModify = async()=>{
     const newUserComment = userComment.current.resizableTextArea.props.value;
-
     try{
-      const result = await commentModify(newData.id,newUserComment)     
+      const result = await commentModify(data.id,newUserComment)     
+      setCommentSwitch(!commentSwitch)
     }catch ({
       response:{ 
         data:{ result }
@@ -33,6 +33,7 @@ function V2WittyCommentModify({newData}){
     newCommentModify();
     setIsModalVisible(false);
     message.success('수정완료');
+    
   };
 
   const handleCancel = () => {
@@ -45,7 +46,7 @@ function V2WittyCommentModify({newData}){
       <Modal title="댓긇 수정" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} cancelText={"작성 취소"} okText={"댓글 수정 완료"}>
       <TextArea
           showCount maxLength={100}
-          placeholder={newData.content}
+          placeholder={data.content}
           autoSize={{ minRows: 3, maxRows: 5 }}
           ref={userComment}
         />
