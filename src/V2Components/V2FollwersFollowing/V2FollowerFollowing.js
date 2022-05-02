@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { List, Avatar,Button,Row,Col, Divider, message } from 'antd';
 import { useEffect} from "react";
-import { followers, following, followerDelete } from '../../apis/users';
+import { followers, following, followerDelete, follow} from '../../apis/users';
 
 
 function V2FollowerFollowing(props) {
@@ -39,9 +39,21 @@ function V2FollowerFollowing(props) {
       alert(result);
     }
   }
+  const addFollower = async (toUserId)=>{
+    try{
+      const result =  await follow(toUserId);
+      message.success("팔로우 완료");
+      setRender(!render);
+    }catch({
+      response:{
+        data: { result},
+      }
+    }){
+      alert(result);
+    }
+  }
 
   const deleteFollower = async (toUserId)=>{
-    console.log(toUserId);
     try{
       const result =  await followerDelete(toUserId);
       message.success("팔로우 해제 완료");
@@ -49,7 +61,7 @@ function V2FollowerFollowing(props) {
     }catch ({
       response: {
         data: { result },
-      },
+      }
     }) {
       alert(result);
     }
@@ -77,8 +89,9 @@ function V2FollowerFollowing(props) {
                   ?null
                   :item.followState === 1
                     ?<Button style={{position:"absolute", right: "0px", top:"10px"}} onClick={
-                      ()=>{deleteFollower(item.id)}}>팔로우</Button>
-                    :<Button style={{position:"absolute", right: "0px", top:"10px"}}>팔로우취소</Button>
+                      ()=>{addFollower(item.id)}}>팔로우</Button>
+                    :<Button style={{position:"absolute", right: "0px", top:"10px"}}  onClick={
+                      ()=>{deleteFollower(item.id)}}>팔로우취소</Button>
                 }
                 </div>}
               description={item.department}
