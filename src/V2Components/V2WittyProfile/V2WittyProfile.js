@@ -17,10 +17,11 @@ function V2WittyProfile(props){
     const user = props.user;
     const contentKey = 2;   
     const imgUrl = props.user.profile_imageUrl;
+    const setWittySuccesFlag = props.setWittySuccesFlag;
+    const wittySuccesFlag = props.wittySuccesFlag
 
     const [fwerNum,setFwerNum] = useState(0);
     const [fwingNum,setFwingNum] = useState(0);
-    const [wittySuccesFlag,setWittySuccesFlag] = useState(false);
 
     const fNum = async () => {
         try{

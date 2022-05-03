@@ -14,6 +14,8 @@ import V2WittyAddSearchContents from "../../V2Components/V2WittyAddSearchContent
 function V2WittyPage(){
   const [userSearch,setUserSearch] = useState("");
   const [profileFlag,setProfileFlag] = useState(false);
+  const [wittySuccesFlag,setWittySuccesFlag] = useState(false);
+
   
   const navigate = useNavigate();
   const contentKey = 1;//로딩시 페이지 설정
@@ -59,11 +61,19 @@ function V2WittyPage(){
     setContentBox(initContent(selectMenu));
   },[selectMenu],[userSearch]);
 
+  useEffect(()=>{
+    console.log(wittySuccesFlag+"랜더링");
+    setSelectMenu(1);
+    if(selectMenu===2){
+      setContentBox(initContent(selectMenu));
+    }
+  },[wittySuccesFlag])
+
   const initContent = (num)=>{
     if(num===1){
-      return <V2WittyAddContents user={user} contentKey={contentKey}/>//전체 위티 조회
+      return <V2WittyAddContents user={user} contentKey={contentKey} wittySuccesFlag={wittySuccesFlag} setWittySuccesFlag={setWittySuccesFlag}/>//전체 위티 조회
     }else if(num===2){
-      return <V2WittyProfile user={user} profileFlag={profileFlag} setProfileFlag={setProfileFlag}/>//프로필 및 유저 작성 위티 부분
+      return <V2WittyProfile user={user} profileFlag={profileFlag} setProfileFlag={setProfileFlag} wittySuccesFlag={wittySuccesFlag} setWittySuccesFlag={setWittySuccesFlag}/>//프로필 및 유저 작성 위티 부분
     }else if(num===3){
       return <V2FollowerFollowing user={user}/>
     }else if(num===4){

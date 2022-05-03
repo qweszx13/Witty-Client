@@ -46,6 +46,7 @@ function WittyComponent({data,myWitty,searchContent,setWittySuccesFlag,wittySucc
   const onClose = () => {
       setCommentVisible(false);
       setCommentSwitch(!commentSwitch);
+      allComment();
   }
   // 댓글 작성 API
   const userComment = async (comment,witty_id) => {
